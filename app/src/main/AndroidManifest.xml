@@ -13,9 +13,14 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".AddActivity"
+            android:label="Add Hike"
+            android:parentActivityName=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:label="Hike App"
-            android:exported="true">
+            android:exported="true"
+            android:label="Hike App">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
