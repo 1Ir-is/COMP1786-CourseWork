@@ -1,10 +1,12 @@
 package com.example.coursework;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
 
     Context context;
     ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
+
 
     HikerAdapter(
         Context context,
@@ -55,6 +58,21 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
         holder.hike_name_txt.setText(String.valueOf(hike_name.get(position)));
         holder.hike_location_txt.setText(String.valueOf(hike_location.get(position)));
         holder.hike_date_txt.setText(String.valueOf(hike_date.get(position)));
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UpdateActivity.class);
+                intent.putExtra("id", String.valueOf(hike_id.get(position)));
+                intent.putExtra("name", String.valueOf(hike_name.get(position)));
+                intent.putExtra("location", String.valueOf(hike_location.get(position)));
+                intent.putExtra("date", String.valueOf(hike_date.get(position)));
+                intent.putExtra("parkingAvailable", String.valueOf(hike_parking_available.get(position)));
+                intent.putExtra("length", String.valueOf(hike_length.get(position)));
+                intent.putExtra("difficultyLevel", String.valueOf(hike_difficulty_level.get(position)));
+                intent.putExtra("description", String.valueOf(hike_description.get(position)));
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -66,12 +84,14 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView hike_id_txt, hike_name_txt, hike_location_txt, hike_date_txt;
+        LinearLayout mainLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             hike_id_txt = itemView.findViewById(R.id.hike_id_txt);
             hike_name_txt = itemView.findViewById(R.id.hike_name_txt);
             hike_location_txt = itemView.findViewById(R.id.hike_location_txt);
             hike_date_txt = itemView.findViewById(R.id.hike_date_txt);
+            mainLayout = itemView.findViewById(R.id.mainLayout);
 
         }
     }
