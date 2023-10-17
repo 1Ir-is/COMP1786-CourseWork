@@ -1,7 +1,10 @@
 package com.example.coursework;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +15,7 @@ import android.widget.Toast;
 public class UpdateActivity extends AppCompatActivity {
 
     EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, parkingAvailableInputUpdate, lengthInputUpdate, difficultyLevelInputUpdate, descriptionInputUpdate;
-    Button updateButton, backButton;
+    Button updateButton, backButton, deleteButton;
     String id, name, location, date, parkingAvailable, length, difficultyLevel, description;
 
     @Override
@@ -28,10 +31,13 @@ public class UpdateActivity extends AppCompatActivity {
         difficultyLevelInputUpdate = findViewById(R.id.hike_difficulty_level_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
 
+        deleteButton = findViewById(R.id.deleteButton);
         updateButton = findViewById(R.id.updateButton);
+        backButton = findViewById(R.id.backButton);
 
         // First we call this
         getData();
+
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +53,13 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
 
-        backButton = findViewById(R.id.backButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDialog();
+            }
+        });
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,5 +102,26 @@ public class UpdateActivity extends AppCompatActivity {
         else{
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void confirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete " + name + " ?");
+        builder.setMessage("Are you sure you want to delete " + name + " ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(UpdateActivity.this);
+                databaseHelper.deleteOneHikeInformation(id);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

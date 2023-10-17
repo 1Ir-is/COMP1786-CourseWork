@@ -117,4 +117,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void deleteOneHikeInformation(String rowId){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        long result = sqLiteDatabase.delete(TABLE_NAME, "person_id=?", new String[]{rowId});
+        if (result == -1){
+            Toast.makeText(context, "Failed to Delete", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
