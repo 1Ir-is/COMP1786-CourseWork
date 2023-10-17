@@ -1,5 +1,6 @@
 package com.example.coursework;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         hikerAdapter = new HikerAdapter(
                 MainActivity.this,
+                this,
                 hike_id,
                 hike_name,
                 hike_location,
@@ -64,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(hikerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            recreate();
+        }
     }
 
     public void showData(){

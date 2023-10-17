@@ -1,5 +1,6 @@
 package com.example.coursework;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -16,11 +17,12 @@ import java.util.ArrayList;
 
 public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
-
+    private final Context context;
+    Activity activity;
+    private final ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
 
     HikerAdapter(
+        Activity activity,
         Context context,
         ArrayList hike_id,
         ArrayList hike_name,
@@ -31,6 +33,7 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
         ArrayList hike_difficulty_level,
         ArrayList hike_description
     ){
+        this.activity = activity;
         this.context = context;
         this.hike_id = hike_id;
         this.hike_name = hike_name;
@@ -70,7 +73,7 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
                 intent.putExtra("length", String.valueOf(hike_length.get(position)));
                 intent.putExtra("difficultyLevel", String.valueOf(hike_difficulty_level.get(position)));
                 intent.putExtra("description", String.valueOf(hike_description.get(position)));
-                context.startActivity(intent);
+                activity.startActivityForResult(intent, 1);
             }
         });
 
