@@ -113,6 +113,7 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(UpdateActivity.this);
                 databaseHelper.deleteOneHikeInformation(id);
+                finish();
             }
         });
 

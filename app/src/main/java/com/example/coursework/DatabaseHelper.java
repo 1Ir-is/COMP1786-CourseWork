@@ -128,4 +128,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void deleteAllHikeInformation(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.execSQL("DELETE FROM " + TABLE_NAME);
+    }
 }
