@@ -1,8 +1,10 @@
 package com.example.coursework;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -44,6 +46,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(sqLiteDatabase);
+    }
 
+    public void addNewHike(String name, String location, String date, String parkingAvailable, String length, String difficultyLevel, String description) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_LOCATION, location);
+        contentValues.put(COLUMN_DATE, date);
+        contentValues.put(COLUMN_PARKING_AVAILABLE, parkingAvailable);
+        contentValues.put(COLUMN_LENGTH, length);
+        contentValues.put(COLUMN_DIFFICULTY_LEVEL, difficultyLevel);
+        contentValues.put(COLUMN_DESCRIPTION, description);
+        long result = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
+        
+        if (result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(context, "Add Successfully!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
