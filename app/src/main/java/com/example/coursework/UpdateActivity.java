@@ -29,13 +29,23 @@ public class UpdateActivity extends AppCompatActivity {
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
 
         updateButton = findViewById(R.id.updateButton);
+
+        // First we call this
+        getData();
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                DatabaseHelper databaseHelper = new DatabaseHelper(UpdateActivity.this);
+                name = nameInputUpdate.getText().toString().trim();
+                location = locationInputUpdate.getText().toString().trim();
+                date = dateInputUpdate.getText().toString().trim();
+                parkingAvailable = parkingAvailableInputUpdate.getText().toString().trim();
+                length = lengthInputUpdate.getText().toString().trim();
+                difficultyLevel = difficultyLevelInputUpdate.getText().toString().trim();
+                description = descriptionInputUpdate.getText().toString().trim();
+                databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, difficultyLevel, description);
             }
         });
-        getData();
 
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

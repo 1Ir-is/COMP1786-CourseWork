@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DIFFICULTY_LEVEL = "hike_difficulty_level";
     private static final String COLUMN_DESCRIPTION = "hike_description";
 
-    public DatabaseHelper(@Nullable Context context) {
+    DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -49,7 +49,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addNewHike(String name, String location, String date, String parkingAvailable, String length, String difficultyLevel, String description) {
+    public void addNewHike(
+        String name,
+        String location,
+        String date,
+        String parkingAvailable,
+        String length,
+        String difficultyLevel,
+        String description
+    ){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -63,14 +71,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
         
         if (result == -1){
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Failed to Add.", Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(context, "Add Successfully!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    Cursor readAllData(){
+    Cursor readAllHikeInformation(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -79,5 +87,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = sqLiteDatabase.rawQuery(query,null);
         }
         return cursor;
+    }
+
+    public void updateHikeInformation(
+        String rowId,
+        String name,
+        String location,
+        String date,
+        String parkingAvailable,
+        String length,
+        String difficultyLevel,
+        String description
+    ){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_LOCATION, location);
+        contentValues.put(COLUMN_DATE, date);
+        contentValues.put(COLUMN_PARKING_AVAILABLE, parkingAvailable);
+        contentValues.put(COLUMN_LENGTH, length);
+        contentValues.put(COLUMN_DIFFICULTY_LEVEL, difficultyLevel);
+        contentValues.put(COLUMN_DESCRIPTION, description);
+        
+        long result = sqLiteDatabase.update(TABLE_NAME, contentValues, "person_id=?", new  String[]{rowId});
+        if (result == -1){
+            Toast.makeText(context, "Failed to Update.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
+        }
     }
 }

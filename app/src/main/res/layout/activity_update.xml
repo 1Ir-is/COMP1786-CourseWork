@@ -62,7 +62,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Length of hike"
-        android:inputType="text"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hike_parking_available_text_update" />

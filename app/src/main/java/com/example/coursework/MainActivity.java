@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showData(){
-        Cursor cursor = databaseHelper.readAllData();
+        Cursor cursor = databaseHelper.readAllHikeInformation();
         if (cursor.getCount() == 1){
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
