@@ -94,7 +94,7 @@ public class AddFragment extends Fragment {
 
                 // Create an AlertDialog to confirm data entry
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-                builder.setTitle("Confirm Data Entry");
+                builder.setTitle("Confirm Information!");
                 builder.setMessage("Are you sure you want to add this information?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

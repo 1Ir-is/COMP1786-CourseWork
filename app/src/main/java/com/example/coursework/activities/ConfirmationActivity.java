@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.coursework.R;
+import com.example.coursework.database.DatabaseHelper;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
@@ -26,9 +27,9 @@ public class ConfirmationActivity extends AppCompatActivity {
 
         // Display the data in an AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Hike Confirmation");
-        builder.setMessage("Hike Name: " + hikeName +
-                "\nHike Location: " + hikeLocation +
+        builder.setTitle("Please review your information!");
+        builder.setMessage("Name: " + hikeName +
+                "\nLocation: " + hikeLocation +
                 "\nDate of Hike: " + hikeDate +
                 "\nParking Available: " + hikeParking +
                 "\nLength of Hike: " + hikeLength +
@@ -38,7 +39,27 @@ public class ConfirmationActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                // Save the data to the database
+                DatabaseHelper databaseHelper = new DatabaseHelper(ConfirmationActivity.this);
+                databaseHelper.addNewHike(
+                        hikeName,
+                        hikeLocation,
+                        hikeDate,
+                        hikeParking,
+                        hikeLength,
+                        hikeDifficulty,
+                        hikeDescription
+                );
+
                 // Handle OK button click
+                finish(); // Close the ConfirmationActivity
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Handle Cancel button click
                 finish(); // Close the ConfirmationActivity
             }
         });
