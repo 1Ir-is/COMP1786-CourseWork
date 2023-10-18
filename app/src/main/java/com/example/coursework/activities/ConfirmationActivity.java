@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.coursework.R;
 import com.example.coursework.database.DatabaseHelper;
@@ -51,6 +53,9 @@ public class ConfirmationActivity extends AppCompatActivity {
                         hikeDescription
                 );
 
+                // Clear input fields
+                clearInputFields();
+
                 // Handle OK button click
                 finish(); // Close the ConfirmationActivity
             }
@@ -65,5 +70,24 @@ public class ConfirmationActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void clearInputFields(){
+        // Clear the EditText and other input fields
+        EditText nameHikeText = findViewById(R.id.hike_name_text);
+        EditText locationHikeText = findViewById(R.id.hike_location_text);
+        EditText dateHikeText = findViewById(R.id.hike_date_text);
+        EditText parkingAvailableHikeText = findViewById(R.id.hike_parking_available_text);
+        EditText lengthHikeText = findViewById(R.id.hike_length_text);
+        EditText difficultyLevelHikeText = findViewById(R.id.hike_difficulty_level_text);
+        EditText descriptionHikeText = findViewById(R.id.hike_description_text);
+
+        nameHikeText.setText("");
+        locationHikeText.setText("");
+        dateHikeText.setText("");
+        parkingAvailableHikeText.setText("");
+        lengthHikeText.setText("");
+        difficultyLevelHikeText.setText("");
+        descriptionHikeText.setText("");
     }
 }
