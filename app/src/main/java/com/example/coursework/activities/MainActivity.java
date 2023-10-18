@@ -1,10 +1,12 @@
 package com.example.coursework.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.coursework.R;
@@ -14,7 +16,7 @@ import com.example.coursework.fragment.HomeFragment;
 import com.example.coursework.fragment.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    private HomeFragment homeFragment;
     ActivityMainBinding binding;
 
     @Override
@@ -47,4 +49,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
 }
