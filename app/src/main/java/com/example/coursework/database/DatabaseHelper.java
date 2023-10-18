@@ -1,4 +1,4 @@
-package com.example.coursework;
+package com.example.coursework.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DIFFICULTY_LEVEL = "hike_difficulty_level";
     private static final String COLUMN_DESCRIPTION = "hike_description";
 
-    DatabaseHelper(@Nullable Context context) {
+    public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -78,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    Cursor readAllHikeInformation(){
+    public Cursor readAllHikeInformation(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 

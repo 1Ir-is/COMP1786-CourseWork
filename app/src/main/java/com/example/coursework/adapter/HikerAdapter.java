@@ -1,4 +1,4 @@
-package com.example.coursework;
+package com.example.coursework.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.coursework.R;
+import com.example.coursework.activities.UpdateActivity;
 
 import java.util.ArrayList;
 
@@ -21,17 +23,17 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
     Activity activity;
     private final ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
 
-    HikerAdapter(
-        Activity activity,
-        Context context,
-        ArrayList hike_id,
-        ArrayList hike_name,
-        ArrayList hike_location,
-        ArrayList hike_date,
-        ArrayList hike_parking_available,
-        ArrayList hike_length,
-        ArrayList hike_difficulty_level,
-        ArrayList hike_description
+    public HikerAdapter(
+            Activity activity,
+            Context context,
+            ArrayList hike_id,
+            ArrayList hike_name,
+            ArrayList hike_location,
+            ArrayList hike_date,
+            ArrayList hike_parking_available,
+            ArrayList hike_length,
+            ArrayList hike_difficulty_level,
+            ArrayList hike_description
     ){
         this.activity = activity;
         this.context = context;

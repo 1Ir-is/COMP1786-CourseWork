@@ -1,6 +1,5 @@
-package com.example.coursework;
+package com.example.coursework.activities;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.coursework.database.DatabaseHelper;
+import com.example.coursework.R;
 
 public class UpdateActivity extends AppCompatActivity {
 
