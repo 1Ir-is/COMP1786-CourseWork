@@ -12,13 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".activities.UpdateActivity"
-            android:parentActivityName=".activities.MainActivity"
+            android:name=".activities.ConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AddActivity"
+            android:name=".activities.UpdateActivity"
             android:exported="false"
-            android:label="Add Hike"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.MainActivity"

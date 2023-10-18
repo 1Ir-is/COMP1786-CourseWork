@@ -3,15 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HomeFragment"
-    android:background="@color/purple_700">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:layout_marginTop="16dp"
+        android:paddingTop="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/empty_imageView"
+        android:layout_width="178dp"
+        android:layout_height="154dp"
+        android:layout_marginTop="200dp"
+        android:alpha="0.1"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerView"
+        app:srcCompat="@drawable/ic_empty" />
+
     <TextView
+        android:id="@+id/no_data_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello home"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
-
+        android:text="No data."
+        android:alpha="0.4"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/empty_imageView" />
 </FrameLayout>

@@ -1,14 +1,21 @@
 package com.example.coursework.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.coursework.R;
+import com.example.coursework.activities.ConfirmationActivity;
+import com.example.coursework.databinding.FragmentAddBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +23,7 @@ import com.example.coursework.R;
  * create an instance of this fragment.
  */
 public class AddFragment extends Fragment {
+    private FragmentAddBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +68,59 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add, container, false);
+        binding = FragmentAddBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        final EditText hikeNameEditText = view.findViewById(R.id.hike_name_text);
+        final EditText hikeLocationEditText = view.findViewById(R.id.hike_location_text);
+        final EditText hikeDateEditText = view.findViewById(R.id.hike_date_text);
+        final EditText hikeParkingEditText = view.findViewById(R.id.hike_parking_available_text);
+        final EditText hikeLengthEditText = view.findViewById(R.id.hike_length_text);
+        final EditText hikeDifficultyEditText = view.findViewById(R.id.hike_difficulty_level_text);
+        final EditText hikeDescriptionEditText = view.findViewById(R.id.hike_description_text);
+
+        Button addButton = view.findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get data entered by the user
+                String hikeName = hikeNameEditText.getText().toString();
+                String hikeLocation = hikeLocationEditText.getText().toString();
+                String hikeDate = hikeDateEditText.getText().toString();
+                String hikeParking = hikeParkingEditText.getText().toString();
+                String hikeLength = hikeLengthEditText.getText().toString();
+                String hikeDifficulty = hikeDifficultyEditText.getText().toString();
+                String hikeDescription = hikeDescriptionEditText.getText().toString();
+
+                // Create an AlertDialog to confirm data entry
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Confirm Data Entry");
+                builder.setMessage("Are you sure you want to add this information?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User confirmed, proceed to the new activity
+                        Intent intent = new Intent(getActivity(), ConfirmationActivity.class);
+                        intent.putExtra("HikeName", hikeName);
+                        intent.putExtra("HikeLocation", hikeLocation);
+                        intent.putExtra("HikeDate", hikeDate);
+                        intent.putExtra("HikeParking", hikeParking);
+                        intent.putExtra("HikeLength", hikeLength);
+                        intent.putExtra("HikeDifficulty", hikeDifficulty);
+                        intent.putExtra("HikeDescription", hikeDescription);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User canceled, do nothing
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        return view;
     }
 }
