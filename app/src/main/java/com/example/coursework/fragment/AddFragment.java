@@ -2,11 +2,15 @@ package com.example.coursework.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.coursework.R;
 import com.example.coursework.activities.ConfirmationActivity;
 import com.example.coursework.databinding.FragmentAddBinding;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +85,44 @@ public class AddFragment extends Fragment {
         binding = FragmentAddBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // Find the TextView by their IDs
+        TextView nameHikeLabel = view.findViewById(R.id.nameHike);
+        TextView locationHikeLabel = view.findViewById(R.id.nameLocation);
+        TextView dateHikeLabel = view.findViewById(R.id.dateHike);
+        TextView parkingAvailableHikeLabel = view.findViewById(R.id.parkingAvailableHike);
+        TextView lengthHikeLabel = view.findViewById(R.id.lengthHike);
+        TextView difficultyLevelHikeLabel = view.findViewById(R.id.levelHike);
+        TextView descriptionHikeLabel = view.findViewById(R.id.descriptionHike);
+
+        // Create a red asterisk (*)
+        String redAsterisk = " *";
+
+        // Create a SpannableString with the label text and the red asterisk
+        SpannableString nameHikeSpan = new SpannableString(nameHikeLabel.getText() + redAsterisk);
+        SpannableString locationHikeSpan = new SpannableString(locationHikeLabel.getText() + redAsterisk);
+        SpannableString dateHikeSpan = new SpannableString(dateHikeLabel.getText() + redAsterisk);
+        SpannableString parkingAvailableHikeSpan = new SpannableString(parkingAvailableHikeLabel.getText() + redAsterisk);
+        SpannableString lengthHikeSpan = new SpannableString(lengthHikeLabel.getText() + redAsterisk);
+        SpannableString difficultyLevelHikeSpan = new SpannableString(difficultyLevelHikeLabel.getText() + redAsterisk);
+
+        // Set the text color of the asterisk to red
+        int redColor = Color.RED;
+        nameHikeSpan.setSpan(new ForegroundColorSpan(redColor), nameHikeSpan.length() - 1, nameHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        locationHikeSpan.setSpan(new ForegroundColorSpan(redColor), locationHikeSpan.length() - 1, locationHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        dateHikeSpan.setSpan(new ForegroundColorSpan(redColor), dateHikeSpan.length() - 1, dateHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        parkingAvailableHikeSpan.setSpan(new ForegroundColorSpan(redColor), parkingAvailableHikeSpan.length() - 1, parkingAvailableHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        lengthHikeSpan.setSpan(new ForegroundColorSpan(redColor), lengthHikeSpan.length() - 1, lengthHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        difficultyLevelHikeSpan.setSpan(new ForegroundColorSpan(redColor), difficultyLevelHikeSpan.length() - 1, difficultyLevelHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Set the SpannableStrings as the text for the TextViews
+        nameHikeLabel.setText(nameHikeSpan);
+        locationHikeLabel.setText(locationHikeSpan);
+        dateHikeLabel.setText(dateHikeSpan);
+        parkingAvailableHikeLabel.setText(parkingAvailableHikeSpan);
+        lengthHikeLabel.setText(lengthHikeSpan);
+        difficultyLevelHikeLabel.setText(difficultyLevelHikeSpan);
+
+        // Find the EditText by their IDs
         final EditText hikeNameEditText = view.findViewById(R.id.hike_name_text);
         final EditText hikeLocationEditText = view.findViewById(R.id.hike_location_text);
         final EditText hikeDateEditText = view.findViewById(R.id.hike_date_text);
