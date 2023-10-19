@@ -10,12 +10,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.example.coursework.R;
 import com.example.coursework.activities.ConfirmationActivity;
 import com.example.coursework.databinding.FragmentAddBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,18 +72,28 @@ public class AddFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Inflate the fragment_home layout
         binding = FragmentAddBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         final EditText hikeNameEditText = view.findViewById(R.id.hike_name_text);
         final EditText hikeLocationEditText = view.findViewById(R.id.hike_location_text);
         final EditText hikeDateEditText = view.findViewById(R.id.hike_date_text);
-        final EditText hikeParkingEditText = view.findViewById(R.id.hike_parking_available_text);
+        final RadioGroup radioGroupParking = view.findViewById(R.id.radioGroupParking);
         final EditText hikeLengthEditText = view.findViewById(R.id.hike_length_text);
-        final EditText hikeDifficultyEditText = view.findViewById(R.id.hike_difficulty_level_text);
+        final Spinner spinnerDifficulty = view.findViewById(R.id.spinnerDifficulty);
         final EditText hikeDescriptionEditText = view.findViewById(R.id.hike_description_text);
+
+        // Set up the Difficulty Level Spinner
+        List<String> difficultyLevels = new ArrayList<>();
+        difficultyLevels.add("Easy");
+        difficultyLevels.add("Moderate");
+        difficultyLevels.add("Difficult");
+        ArrayAdapter<String> difficultyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, difficultyLevels);
+        difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDifficulty.setAdapter(difficultyAdapter);
 
         Button addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -87,15 +103,31 @@ public class AddFragment extends Fragment {
                 String hikeName = hikeNameEditText.getText().toString();
                 String hikeLocation = hikeLocationEditText.getText().toString();
                 String hikeDate = hikeDateEditText.getText().toString();
-                String hikeParking = hikeParkingEditText.getText().toString();
+
+                // Get the selected parking option
+                String hikeParking = "";
+                int checkedId = radioGroupParking.getCheckedRadioButtonId();
+                if (checkedId == R.id.radioButtonYes) {
+                    hikeParking = "Yes";
+                } else if (checkedId == R.id.radioButtonNo) {
+                    hikeParking = "No";
+                } else {
+                    // Handle the case where no radio button is selected or other error handling
+                    hikeParking = ""; // Assign a default value or handle it accordingly
+                }
+
                 String hikeLength = hikeLengthEditText.getText().toString();
-                String hikeDifficulty = hikeDifficultyEditText.getText().toString();
+
+                // Get the selected difficulty level from the Spinner
+                String hikeDifficulty = spinnerDifficulty.getSelectedItem().toString();
+
                 String hikeDescription = hikeDescriptionEditText.getText().toString();
 
                 // Create an AlertDialog to confirm data entry
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                 builder.setTitle("Confirm Information!");
                 builder.setMessage("Are you sure you want to add this information?");
+                String finalHikeParking = hikeParking;
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -104,7 +136,7 @@ public class AddFragment extends Fragment {
                         intent.putExtra("HikeName", hikeName);
                         intent.putExtra("HikeLocation", hikeLocation);
                         intent.putExtra("HikeDate", hikeDate);
-                        intent.putExtra("HikeParking", hikeParking);
+                        intent.putExtra("HikeParking", finalHikeParking);
                         intent.putExtra("HikeLength", hikeLength);
                         intent.putExtra("HikeDifficulty", hikeDifficulty);
                         intent.putExtra("HikeDescription", hikeDescription);

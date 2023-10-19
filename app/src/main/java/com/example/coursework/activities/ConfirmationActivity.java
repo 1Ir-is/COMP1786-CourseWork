@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.coursework.R;
@@ -77,17 +78,19 @@ public class ConfirmationActivity extends AppCompatActivity {
         EditText nameHikeText = findViewById(R.id.hike_name_text);
         EditText locationHikeText = findViewById(R.id.hike_location_text);
         EditText dateHikeText = findViewById(R.id.hike_date_text);
-        EditText parkingAvailableHikeText = findViewById(R.id.hike_parking_available_text);
+
+        // Clear parking availability based on the selected radio button
+        RadioGroup radioGroupParking = findViewById(R.id.radioGroupParking);
+        radioGroupParking.clearCheck(); // Uncheck all radio buttons
+
         EditText lengthHikeText = findViewById(R.id.hike_length_text);
-        EditText difficultyLevelHikeText = findViewById(R.id.hike_difficulty_level_text);
         EditText descriptionHikeText = findViewById(R.id.hike_description_text);
 
         nameHikeText.setText("");
         locationHikeText.setText("");
         dateHikeText.setText("");
-        parkingAvailableHikeText.setText("");
         lengthHikeText.setText("");
-        difficultyLevelHikeText.setText("");
         descriptionHikeText.setText("");
     }
+
 }
