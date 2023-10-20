@@ -1,6 +1,8 @@
 package com.example.coursework.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -91,12 +93,16 @@ public class HomeFragment extends Fragment {
         // Inflate the fragment_home layout
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-
         recyclerView = view.findViewById(R.id.recyclerView);
         emptyImageView = view.findViewById(R.id.empty_imageView);
         noData = view.findViewById(R.id.no_data_textview);
         deleteAllButton = view.findViewById(R.id.deleteAllButton);
+        deleteAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDialogDeleteAll();
+            }
+        });
 
         // Initialize the database helper
         databaseHelper = new DatabaseHelper(requireContext());
@@ -155,6 +161,28 @@ public class HomeFragment extends Fragment {
             emptyImageView.setVisibility(View.GONE);
             noData.setVisibility(View.GONE);
         }
+    }
+
+    public void confirmDialogDeleteAll(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Delete All?");
+        builder.setMessage("Are you sure you want to delete all data?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
+                databaseHelper.deleteAllHikeInformation();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        builder.create().show();
     }
 
 

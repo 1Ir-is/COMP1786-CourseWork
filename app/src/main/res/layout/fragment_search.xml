@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.SearchFragment"
-    android:background="@color/teal_700">
+    android:orientation="vertical"
+    tools:context=".fragment.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Search bar with hint text -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello search"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
+        android:hint="Type here to search..."
+        android:padding="16dp"
+        android:background="@android:color/white"
+        android:layout_margin="16dp"/>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@color/teal_200"
+        android:layout_margin="16dp"/>
+
+    <!-- RecyclerView to display search results -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>
