@@ -176,16 +176,39 @@ public class AddFragment extends Fragment {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // User confirmed, proceed to the new activity
-                        Intent intent = new Intent(getActivity(), ConfirmationActivity.class);
-                        intent.putExtra("HikeName", hikeName);
-                        intent.putExtra("HikeLocation", hikeLocation);
-                        intent.putExtra("HikeDate", hikeDate);
-                        intent.putExtra("HikeParking", finalHikeParking);
-                        intent.putExtra("HikeLength", hikeLength);
-                        intent.putExtra("HikeDifficulty", hikeDifficulty);
-                        intent.putExtra("HikeDescription", hikeDescription);
-                        startActivity(intent);
+
+                        // Validation checks
+                        boolean isNameOfHikeValid = isNameOfHikeValid(hikeName);
+                        boolean isDateOfHikeValid = isDateOfHikeValid(hikeDate);
+
+                        if (hikeName.isEmpty() || hikeLocation.isEmpty() || hikeDate.isEmpty() || hikeLength.isEmpty() || hikeDifficulty.isEmpty()){
+                            showValidationError("All fields marked with * are required!");
+                        }
+                        else if (!isDateOfHikeValid) {
+                            showValidationError("Invalid date format. Please input again, use dd/mm/yyyy format!");
+                        }
+                        else if (!isNameOfHikeValid) {
+                            showValidationError("Invalid name. Please enter again!");
+                        }
+                        else if (hikeDescription.isEmpty()) {
+                            showValidationError("Please fill in all fields!");
+                        }
+                        else {
+                            // Create an intent to start the ConfirmationActivity
+                            Intent intent = new Intent(getActivity(), ConfirmationActivity.class);
+
+                            //Pass user-input data as extras to the intent
+                            intent.putExtra("HikeName", hikeName);
+                            intent.putExtra("HikeLocation", hikeLocation);
+                            intent.putExtra("HikeDate", hikeDate);
+                            intent.putExtra("HikeParking", finalHikeParking);
+                            intent.putExtra("HikeLength", hikeLength);
+                            intent.putExtra("HikeDifficulty", hikeDifficulty);
+                            intent.putExtra("HikeDescription", hikeDescription);
+
+                            // Start the ConfirmationActivity
+                            startActivity(intent);
+                        }
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -199,5 +222,54 @@ public class AddFragment extends Fragment {
         });
 
         return view;
+    }
+
+    // Helper method to show validation error
+    private void showValidationError(String errorMessage){
+        new AlertDialog.Builder(getActivity()).setTitle("Missing Information").setMessage(errorMessage).setPositiveButton("OK", null).show();
+    }
+
+    // Validation method for name of the hike
+    private boolean isNameOfHikeValid(String name){
+        return name.matches("[a-zA-Z ]+");
+    }
+
+    // Validation method for date in "dd/mm/yyyy" format
+    private boolean isDateOfHikeValid(String date){
+        // Define a regular expression pattern for a valid date in "dd/mm/yyyy" format
+        String regex = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\\d\\d$";
+
+        // Check if the input matches the pattern
+        if (date.matches(regex)){
+            // Split the date into day, month and year
+            String[] dateParts = date.split("/");
+            int day = Integer.parseInt(dateParts[0]);
+            int month = Integer.parseInt(dateParts[1]);
+            int year = Integer.parseInt(dateParts[2]);
+
+            // Check if the year is a leap year (for February validation)
+            boolean isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+
+            // Validate day, month, and year
+            if (month >= 1 && month <= 12) {
+                if (month == 2) {
+                    if (isLeapYear && (day >= 1 && day <= 29)) {
+                        // Valid leap year date
+                        return true;
+                    } else {
+                        // Valid non-leap year date
+                        return !isLeapYear && (day >= 1 && day <= 28);
+                    }
+                } else if ((month == 4 || month == 6 || month == 9 || month == 11) && (day >= 1 && day <= 30)) {
+                    // Valid 30-day month date
+                    return true;
+                } else {
+                    // Valid 31-day month date
+                    return (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && (day >= 1 && day <= 31);
+                }
+            }
+        }
+        // Invalid date of hike
+        return false;
     }
 }
