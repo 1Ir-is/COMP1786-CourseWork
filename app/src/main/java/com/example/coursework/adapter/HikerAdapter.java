@@ -3,6 +3,7 @@ package com.example.coursework.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
     private final Context context;
     Activity activity;
     private final ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
-
     public HikerAdapter(
             Activity activity,
             Context context,
@@ -47,7 +47,6 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
         this.hike_description = hike_description;
 
     }
-
 
     @NonNull
     @Override

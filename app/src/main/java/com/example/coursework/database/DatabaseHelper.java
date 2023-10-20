@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -133,4 +136,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.execSQL("DELETE FROM " + TABLE_NAME);
     }
+
+    public Cursor searchHikesByName(String query) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String[] columns = {
+                COLUMN_ID, COLUMN_NAME, COLUMN_LOCATION, COLUMN_DATE, COLUMN_PARKING_AVAILABLE,
+                COLUMN_LENGTH, COLUMN_DIFFICULTY_LEVEL, COLUMN_DESCRIPTION
+        };
+        String selection = COLUMN_NAME + " LIKE ?";
+        String[] selectionArgs = new String[]{"%" + query + "%"};
+        return sqLiteDatabase.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+    }
+
+
 }
