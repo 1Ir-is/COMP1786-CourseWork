@@ -147,6 +147,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = new String[]{"%" + query + "%"};
         return sqLiteDatabase.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
     }
-
-
 }

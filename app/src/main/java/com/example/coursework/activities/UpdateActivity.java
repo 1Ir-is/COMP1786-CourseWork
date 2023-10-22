@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.coursework.database.DatabaseHelper;
 import com.example.coursework.R;
+import com.example.coursework.fragment.HomeFragment;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -54,6 +55,11 @@ public class UpdateActivity extends AppCompatActivity {
                 difficultyLevel = difficultyLevelInputUpdate.getText().toString().trim();
                 description = descriptionInputUpdate.getText().toString().trim();
                 databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, difficultyLevel, description);
+                // Quay lại HomeFragment
+                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+                intent.putExtra("fragmentToLoad", "home_fragment"); // Truyền thông tin để hiển thị HomeFragment
+                startActivity(intent);
+                finish(); // Kết thúc UpdateActivity
             }
         });
 

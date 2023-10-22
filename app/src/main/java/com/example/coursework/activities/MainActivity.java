@@ -25,11 +25,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Replace the fragment with AddFragment initially
         replaceFragment(new AddFragment());
+
+        // Đảm bảo đăng ký onNewIntent
+        handleNewIntent(getIntent());
+
         binding.bottomNavigationView.setBackground(null);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-
             int itemId = item.getItemId();
             if (itemId == R.id.add) {
                 replaceFragment(new AddFragment());
@@ -40,7 +44,24 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleNewIntent(intent);
+    }
+
+    private void handleNewIntent(Intent intent) {
+        if (intent != null && intent.hasExtra("fragmentToLoad")) {
+            String fragmentToLoad = intent.getStringExtra("fragmentToLoad");
+            if (fragmentToLoad != null) {
+                if (fragmentToLoad.equals("home_fragment")) {
+                    // Hiển thị HomeFragment
+                    replaceFragment(new HomeFragment());
+                }
+            }
+        }
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -49,5 +70,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
-
 }
