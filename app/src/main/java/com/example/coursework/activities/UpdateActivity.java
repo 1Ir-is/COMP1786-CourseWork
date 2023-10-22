@@ -55,11 +55,11 @@ public class UpdateActivity extends AppCompatActivity {
                 difficultyLevel = difficultyLevelInputUpdate.getText().toString().trim();
                 description = descriptionInputUpdate.getText().toString().trim();
                 databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, difficultyLevel, description);
-                // Quay lại HomeFragment
+                // Return HomeFragment
                 Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
-                intent.putExtra("fragmentToLoad", "home_fragment"); // Truyền thông tin để hiển thị HomeFragment
+                intent.putExtra("fragmentToLoad", "home_fragment");
                 startActivity(intent);
-                finish(); // Kết thúc UpdateActivity
+                finish(); // end UpdateActivity
             }
         });
 
@@ -123,6 +123,11 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(UpdateActivity.this);
                 databaseHelper.deleteOneHikeInformation(id);
+                // Return HomeFragment
+                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+                intent.putExtra("fragmentToLoad", "home_fragment");
+                startActivity(intent);
+                finish(); // end UpdateActivity
                 finish();
             }
         });
