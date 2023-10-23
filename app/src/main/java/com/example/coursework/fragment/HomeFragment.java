@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coursework.R;
+import com.example.coursework.activities.MainActivity;
+import com.example.coursework.activities.UpdateActivity;
 import com.example.coursework.adapter.HikerAdapter;
 import com.example.coursework.database.DatabaseHelper;
 import com.example.coursework.databinding.FragmentAddBinding;
@@ -102,6 +105,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 confirmDialogDeleteAll();
             }
+
         });
 
         // Initialize the database helper
@@ -172,8 +176,16 @@ public class HomeFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
                 databaseHelper.deleteAllHikeInformation();
+
+                // Return to HomeFragment when delete all successfully
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                HomeFragment homeFragment = new HomeFragment();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frame_layout, homeFragment);
+                fragmentTransaction.commit();
             }
         });
+
 
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
@@ -184,6 +196,4 @@ public class HomeFragment extends Fragment {
 
         builder.create().show();
     }
-
-
 }

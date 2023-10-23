@@ -1,6 +1,7 @@
 package com.example.coursework.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -17,6 +18,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.coursework.R;
+import com.example.coursework.activities.MainActivity;
+import com.example.coursework.activities.UpdateActivity;
 import com.example.coursework.adapter.HikerAdapter;
 import com.example.coursework.database.DatabaseHelper;
 import com.example.coursework.databinding.FragmentAddBinding;
@@ -84,7 +87,6 @@ public class SearchFragment extends Fragment {
         RecyclerView searchResultsRecyclerView = view.findViewById(R.id.searchResultsRecyclerView);
         searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Khởi tạo đối tượng DatabaseHelper
         databaseHelper = new DatabaseHelper(getContext());
 
         hike_id = new ArrayList<>();
@@ -102,6 +104,16 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 String query = searchEditText.getText().toString().trim();
                 if (!query.isEmpty()) {
+                    // Xóa dữ liệu tìm kiếm trước đó
+                    hike_id.clear();
+                    hike_name.clear();
+                    hike_location.clear();
+                    hike_date.clear();
+                    hike_parking_available.clear();
+                    hike_length.clear();
+                    hike_difficulty_level.clear();
+                    hike_description.clear();
+
                     Cursor cursor = databaseHelper.searchHikesByName(query);
                     if (cursor.getCount() == 0) {
                         Toast.makeText(getContext(), "No data", Toast.LENGTH_SHORT).show();
@@ -124,6 +136,7 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+
 
         return view;
     }

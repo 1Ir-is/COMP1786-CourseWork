@@ -92,7 +92,6 @@ public class AddFragment extends Fragment {
         TextView parkingAvailableHikeLabel = view.findViewById(R.id.parkingAvailableHike);
         TextView lengthHikeLabel = view.findViewById(R.id.lengthHike);
         TextView difficultyLevelHikeLabel = view.findViewById(R.id.levelHike);
-        TextView descriptionHikeLabel = view.findViewById(R.id.descriptionHike);
 
         // Create a red asterisk (*)
         String redAsterisk = " *";

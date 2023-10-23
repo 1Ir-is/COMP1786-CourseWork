@@ -16,11 +16,13 @@ import android.widget.Toast;
 import com.example.coursework.database.DatabaseHelper;
 import com.example.coursework.R;
 import com.example.coursework.fragment.HomeFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UpdateActivity extends AppCompatActivity {
 
     EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, parkingAvailableInputUpdate, lengthInputUpdate, difficultyLevelInputUpdate, descriptionInputUpdate;
-    Button updateButton, backButton, deleteButton;
+    Button updateButton, deleteButton;
+    FloatingActionButton backButton;
     String id, name, location, date, parkingAvailable, length, difficultyLevel, description;
 
     @Override
@@ -38,7 +40,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         deleteButton = findViewById(R.id.deleteButton);
         updateButton = findViewById(R.id.updateButton);
-        backButton = findViewById(R.id.backButton);
+        backButton = findViewById(R.id.return_button);
 
         // First we call this
         getData();
@@ -73,8 +75,7 @@ public class UpdateActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
-                startActivity(intent);
+                returnToHomeFragment();
             }
         });
     }
@@ -139,5 +140,13 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    public void returnToHomeFragment(){
+        // Return HomeFragment
+        Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+        intent.putExtra("fragmentToLoad", "home_fragment");
+        startActivity(intent);
+        finish(); // end UpdateActivity
     }
 }

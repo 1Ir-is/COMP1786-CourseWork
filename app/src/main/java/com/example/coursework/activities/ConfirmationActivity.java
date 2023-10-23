@@ -54,8 +54,11 @@ public class ConfirmationActivity extends AppCompatActivity {
                         hikeDescription
                 );
 
-                // Clear input fields
-                clearInputFields();
+                // Return HomeFragment
+                Intent intent = new Intent(ConfirmationActivity.this, MainActivity.class);
+                intent.putExtra("fragmentToLoad", "home_fragment");
+                startActivity(intent);
+                finish(); // end UpdateActivity
 
                 // Handle OK button click
                 finish(); // Close the ConfirmationActivity
