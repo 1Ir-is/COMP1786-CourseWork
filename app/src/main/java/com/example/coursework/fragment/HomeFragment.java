@@ -28,6 +28,7 @@ import com.example.coursework.activities.MainActivity;
 import com.example.coursework.activities.UpdateActivity;
 import com.example.coursework.adapter.HikerAdapter;
 import com.example.coursework.database.DatabaseHelper;
+
 import com.example.coursework.databinding.FragmentAddBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

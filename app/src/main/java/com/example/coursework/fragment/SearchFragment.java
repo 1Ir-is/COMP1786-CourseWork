@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 String query = searchEditText.getText().toString().trim();
                 if (!query.isEmpty()) {
-                    // Xóa dữ liệu tìm kiếm trước đó
+                    // Delete the previous data
                     hike_id.clear();
                     hike_name.clear();
                     hike_location.clear();
@@ -116,7 +116,7 @@ public class SearchFragment extends Fragment {
 
                     Cursor cursor = databaseHelper.searchHikesByName(query);
                     if (cursor.getCount() == 0) {
-                        Toast.makeText(getContext(), "No data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Not found!", Toast.LENGTH_SHORT).show();
                     } else {
                         while (cursor.moveToNext()) {
                             hike_id.add(cursor.getString(0));
@@ -133,6 +133,9 @@ public class SearchFragment extends Fragment {
                         searchResultsRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
+                }
+                else{
+                    Toast.makeText(getContext(), "Please type something to search!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
