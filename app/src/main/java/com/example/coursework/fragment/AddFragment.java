@@ -1,5 +1,6 @@
 package com.example.coursework.fragment;
 
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,15 +21,19 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.coursework.R;
 import com.example.coursework.activities.ConfirmationActivity;
 import com.example.coursework.databinding.FragmentAddBinding;
 
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -137,7 +142,7 @@ public class AddFragment extends Fragment {
         final EditText hikeLengthEditText = view.findViewById(R.id.hike_length_text);
         final Spinner spinnerDifficulty = view.findViewById(R.id.spinnerDifficulty);
         final Spinner spinnerWeatherForecast = view.findViewById(R.id.hike_weather_spinner);
-        final EditText estimatedTime = view.findViewById(R.id.hike_estimated_time_text);
+        final Button timeButton = view.findViewById(R.id.hike_estimated_time_button);
         final EditText hikeDescriptionEditText = view.findViewById(R.id.hike_description_text);
 
         // Set up the Difficulty Level Spinner
@@ -171,6 +176,26 @@ public class AddFragment extends Fragment {
         // Set the adapter to the spinner
         spinnerWeatherForecast.setAdapter(weatherAdapter);
 
+        // Set up time button
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                        timeButton.setText(selectedTime);
+                    }
+                }, hour, minute, android.text.format.DateFormat.is24HourFormat(getActivity()));
+
+                timePickerDialog.show();
+            }
+        });
+
         Button addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +222,7 @@ public class AddFragment extends Fragment {
                 // Get the selected weather forecast from the Spinner
                 String hikeWeatherForecast = spinnerWeatherForecast.getSelectedItem().toString();
 
-                String hikeTimeEstimated = estimatedTime.getText().toString();
+                String hikeTimeEstimated = timeButton.getText().toString();
 
                 // Get the selected difficulty level from the Spinner
                 String hikeDifficulty = spinnerDifficulty.getSelectedItem().toString();
