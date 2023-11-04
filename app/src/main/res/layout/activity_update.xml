@@ -225,23 +225,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupParking"
                 tools:ignore="RtlSymmetry" />
 
-            <EditText
-                android:id="@+id/hike_weather_forecast_text_update"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingStart="15dp"
-                android:textStyle="italic"
-                android:textColor="@color/text_color"
-                android:background="@drawable/input_background"
-                android:ems="10"
-                android:inputType="number"
-                android:text=""
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lengthHike"
-                tools:ignore="RtlSymmetry" />
+            <Spinner
+                android:id="@+id/hike_weather_forecast_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/weather_forecast_array" />
         </TableRow>
 
         <TableRow
@@ -299,23 +287,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/lengthHike"
                 tools:ignore="RtlSymmetry" />
 
-            <EditText
-                android:id="@+id/hike_difficulty_level_text_update"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingStart="15dp"
-                android:textStyle="italic"
-                android:textColor="@color/text_color"
-                android:background="@drawable/input_background"
-                android:ems="10"
-                android:inputType="text"
-                android:text=""
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lengthHike"
-                tools:ignore="RtlSymmetry" />
+            <Spinner
+                android:id="@+id/hike_difficulty_level_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/difficulty_level_array" />
         </TableRow>
 
         <TextView

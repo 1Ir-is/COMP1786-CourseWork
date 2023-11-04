@@ -9,10 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.coursework.database.DatabaseHelper;
@@ -24,6 +26,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, lengthInputUpdate, estimatedTimeUpdate, descriptionInputUpdate;
     RadioGroup parkingRadioGroup;
+    Spinner hikeWeatherForecastSpinner, hikeDifficultyLevelSpinner;
     RadioButton radioButtonYes, radioButtonNo;
     Button updateButton, deleteButton;
     FloatingActionButton backButton;
@@ -40,6 +43,8 @@ public class UpdateActivity extends AppCompatActivity {
         lengthInputUpdate = findViewById(R.id.hike_length_text_update);
         estimatedTimeUpdate = findViewById(R.id.hike_time_estimated_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
+        hikeWeatherForecastSpinner = findViewById(R.id.hike_weather_forecast_spinner);
+        hikeDifficultyLevelSpinner = findViewById(R.id.hike_difficulty_level_spinner);
         parkingRadioGroup = findViewById(R.id.parking_available_radio_group);
         radioButtonYes = findViewById(R.id.radio_yes);
         radioButtonNo = findViewById(R.id.radio_no);
@@ -60,11 +65,15 @@ public class UpdateActivity extends AppCompatActivity {
                 date = dateInputUpdate.getText().toString().trim();
                 length = lengthInputUpdate.getText().toString().trim();
                 estimatedTime = estimatedTimeUpdate.getText().toString().trim();
+
                 description = descriptionInputUpdate.getText().toString().trim();
 
                 int selectedId = parkingRadioGroup.getCheckedRadioButtonId();
                 RadioButton selectedRadioButton = findViewById(selectedId);
                 parkingAvailable = selectedRadioButton.getText().toString();
+
+                weatherForecast = hikeWeatherForecastSpinner.getSelectedItem().toString();
+                difficultyLevel = hikeDifficultyLevelSpinner.getSelectedItem().toString();
 
                 databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description);
 
@@ -112,9 +121,14 @@ public class UpdateActivity extends AppCompatActivity {
             parkingAvailable = getIntent().getStringExtra("parkingAvailable");
             length = getIntent().getStringExtra("length");
             weatherForecast = getIntent().getStringExtra("weatherForecast");
+            String weatherForecast = getIntent().getStringExtra("weatherForecast");
             estimatedTime = getIntent().getStringExtra("estimatedTime");
-            difficultyLevel = getIntent().getStringExtra("difficultyLevel");
+            String difficultyLevel = getIntent().getStringExtra("difficultyLevel");
             description = getIntent().getStringExtra("description");
+
+            // Setting spinner data
+            setupSpinner(hikeWeatherForecastSpinner, R.array.weather_forecast_array, weatherForecast);
+            setupSpinner(hikeDifficultyLevelSpinner, R.array.difficulty_level_array, difficultyLevel);
 
             // Setting intent data
             nameInputUpdate.setText(name);
@@ -135,6 +149,13 @@ public class UpdateActivity extends AppCompatActivity {
         }
     }
 
+    public void setupSpinner(Spinner spinner, int arrayResource, String selectedValue) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, arrayResource, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        int position = adapter.getPosition(selectedValue);
+        spinner.setSelection(position);
+    }
     public void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete " + name + " ?");
