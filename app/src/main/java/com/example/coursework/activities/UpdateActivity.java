@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.coursework.database.DatabaseHelper;
@@ -22,13 +24,16 @@ import com.example.coursework.R;
 import com.example.coursework.fragment.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, lengthInputUpdate, estimatedTimeUpdate, descriptionInputUpdate;
+    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, lengthInputUpdate, descriptionInputUpdate;
     RadioGroup parkingRadioGroup;
     Spinner hikeWeatherForecastSpinner, hikeDifficultyLevelSpinner;
     RadioButton radioButtonYes, radioButtonNo;
-    Button updateButton, deleteButton;
+    Button updateButton, deleteButton, estimatedTimeUpdate;
     FloatingActionButton backButton;
     String id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description;
 
@@ -41,10 +46,13 @@ public class UpdateActivity extends AppCompatActivity {
         locationInputUpdate = findViewById(R.id.hike_location_text_update);
         dateInputUpdate = findViewById(R.id.hike_date_text_update);
         lengthInputUpdate = findViewById(R.id.hike_length_text_update);
-        estimatedTimeUpdate = findViewById(R.id.hike_time_estimated_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
+
+        estimatedTimeUpdate = findViewById(R.id.hike_estimated_time_update_button);
+
         hikeWeatherForecastSpinner = findViewById(R.id.hike_weather_forecast_spinner);
         hikeDifficultyLevelSpinner = findViewById(R.id.hike_difficulty_level_spinner);
+
         parkingRadioGroup = findViewById(R.id.parking_available_radio_group);
         radioButtonYes = findViewById(R.id.radio_yes);
         radioButtonNo = findViewById(R.id.radio_no);
@@ -60,18 +68,21 @@ public class UpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(UpdateActivity.this);
+
+                // get the input data
                 name = nameInputUpdate.getText().toString().trim();
                 location = locationInputUpdate.getText().toString().trim();
                 date = dateInputUpdate.getText().toString().trim();
                 length = lengthInputUpdate.getText().toString().trim();
                 estimatedTime = estimatedTimeUpdate.getText().toString().trim();
-
                 description = descriptionInputUpdate.getText().toString().trim();
 
+                // get the radio button data
                 int selectedId = parkingRadioGroup.getCheckedRadioButtonId();
                 RadioButton selectedRadioButton = findViewById(selectedId);
                 parkingAvailable = selectedRadioButton.getText().toString();
 
+                // get the spinner data
                 weatherForecast = hikeWeatherForecastSpinner.getSelectedItem().toString();
                 difficultyLevel = hikeDifficultyLevelSpinner.getSelectedItem().toString();
 
@@ -82,6 +93,25 @@ public class UpdateActivity extends AppCompatActivity {
                 intent.putExtra("fragmentToLoad", "home_fragment");
                 startActivity(intent);
                 finish(); // end UpdateActivity
+            }
+        });
+
+        estimatedTimeUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(UpdateActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                        String selectedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute);
+                        estimatedTimeUpdate.setText(selectedTime);
+                    }
+                }, hour, minute, android.text.format.DateFormat.is24HourFormat(UpdateActivity.this));
+
+                timePickerDialog.show();
             }
         });
 

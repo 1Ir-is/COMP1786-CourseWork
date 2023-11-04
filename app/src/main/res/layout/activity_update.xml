@@ -250,23 +250,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupParking"
                 tools:ignore="RtlSymmetry" />
 
-            <EditText
-                android:id="@+id/hike_time_estimated_text_update"
+            <Button
+                android:id="@+id/hike_estimated_time_update_button"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingStart="15dp"
-                android:textStyle="italic"
-                android:textColor="@color/text_color"
-                android:background="@drawable/input_background"
-                android:ems="10"
-                android:inputType="number"
-                android:text=""
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lengthHike"
-                tools:ignore="RtlSymmetry" />
+                android:textSize="20sp" />
         </TableRow>
 
         <TableRow
