@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     FloatingActionButton deleteAllButton;
     DatabaseHelper databaseHelper;
-    ArrayList<String> hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
+    ArrayList<String> hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_weather_forecast, hike_time_estimated, hike_difficulty_level, hike_description;
     HikerAdapter hikerAdapter;
     ImageView emptyImageView;
     TextView noData;
@@ -106,7 +106,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 confirmDialogDeleteAll();
             }
-
         });
 
         // Initialize the database helper
@@ -119,6 +118,8 @@ public class HomeFragment extends Fragment {
         hike_date = new ArrayList<>();
         hike_parking_available = new ArrayList<>();
         hike_length = new ArrayList<>();
+        hike_weather_forecast = new ArrayList<>();
+        hike_time_estimated = new ArrayList<>();
         hike_difficulty_level = new ArrayList<>();
         hike_description = new ArrayList<>();
 
@@ -127,22 +128,23 @@ public class HomeFragment extends Fragment {
 
         // Initialize the adapter with the data
         hikerAdapter = new HikerAdapter(
-                requireActivity(),  // Pass the activity
-                requireContext(),  // Pass the context
-                hike_id,
-                hike_name,
-                hike_location,
-                hike_date,
-                hike_parking_available,
-                hike_length,
-                hike_difficulty_level,
-                hike_description
+            requireActivity(),  // Pass the activity
+            requireContext(),  // Pass the context
+            hike_id,
+            hike_name,
+            hike_location,
+            hike_date,
+            hike_parking_available,
+            hike_length,
+            hike_weather_forecast,
+            hike_time_estimated,
+            hike_difficulty_level,
+            hike_description
         );
 
         // Set the adapter for your RecyclerView
         recyclerView.setAdapter(hikerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
 
         return view;
     }
@@ -160,8 +162,10 @@ public class HomeFragment extends Fragment {
                 hike_date.add(cursor.getString(3));
                 hike_parking_available.add(cursor.getString(4));
                 hike_length.add(cursor.getString(5));
-                hike_difficulty_level.add(cursor.getString(6));
-                hike_description.add(cursor.getString(7));
+                hike_weather_forecast.add(cursor.getString(6));
+                hike_time_estimated.add(cursor.getString(7));
+                hike_difficulty_level.add(cursor.getString(8));
+                hike_description.add(cursor.getString(9));
             }
             emptyImageView.setVisibility(View.GONE);
             noData.setVisibility(View.GONE);
@@ -191,7 +195,6 @@ public class HomeFragment extends Fragment {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
 

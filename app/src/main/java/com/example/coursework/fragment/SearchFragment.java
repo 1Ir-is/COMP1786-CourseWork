@@ -1,10 +1,12 @@
 package com.example.coursework.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +34,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
-    ArrayList<String> hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
+    ArrayList<String> hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_weather_forecast, hike_time_estimated, hike_difficulty_level, hike_description;
     private DatabaseHelper databaseHelper;
 
     private FragmentAddBinding binding;
@@ -95,6 +97,8 @@ public class SearchFragment extends Fragment {
         hike_date = new ArrayList<>();
         hike_parking_available = new ArrayList<>();
         hike_length = new ArrayList<>();
+        hike_weather_forecast = new ArrayList<>();
+        hike_time_estimated = new ArrayList<>();
         hike_difficulty_level = new ArrayList<>();
         hike_description = new ArrayList<>();
 
@@ -111,12 +115,14 @@ public class SearchFragment extends Fragment {
                     hike_date.clear();
                     hike_parking_available.clear();
                     hike_length.clear();
+                    hike_weather_forecast.clear();
+                    hike_time_estimated.clear();
                     hike_difficulty_level.clear();
                     hike_description.clear();
 
                     Cursor cursor = databaseHelper.searchHikesByName(query);
                     if (cursor.getCount() == 0) {
-                        Toast.makeText(getContext(), "Not found!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Not found!", Toast.LENGTH_SHORT).show();
                     } else {
                         while (cursor.moveToNext()) {
                             hike_id.add(cursor.getString(0));
@@ -125,11 +131,26 @@ public class SearchFragment extends Fragment {
                             hike_date.add(cursor.getString(3));
                             hike_parking_available.add(cursor.getString(4));
                             hike_length.add(cursor.getString(5));
-                            hike_difficulty_level.add(cursor.getString(6));
-                            hike_description.add(cursor.getString(7));
+                            hike_weather_forecast.add(cursor.getString(6));
+                            hike_time_estimated.add(cursor.getString(7));
+                            hike_difficulty_level.add(cursor.getString(8));
+                            hike_description.add(cursor.getString(9));
                         }
 
-                        HikerAdapter adapter = new HikerAdapter(getActivity(), getContext(), hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description);
+                        HikerAdapter adapter = new HikerAdapter(
+                            getActivity(),
+                            getContext(),
+                            hike_id,
+                            hike_name,
+                            hike_location,
+                            hike_date,
+                            hike_parking_available,
+                            hike_length,
+                            hike_weather_forecast,
+                            hike_time_estimated,
+                            hike_difficulty_level,
+                            hike_description
+                        );
                         searchResultsRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
@@ -139,9 +160,6 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
-
-
         return view;
     }
-
 }

@@ -20,10 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, parkingAvailableInputUpdate, lengthInputUpdate, difficultyLevelInputUpdate, descriptionInputUpdate;
+    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, parkingAvailableInputUpdate, lengthInputUpdate, weatherForecastUpdate, estimatedTimeUpdate ,difficultyLevelInputUpdate, descriptionInputUpdate;
     Button updateButton, deleteButton;
     FloatingActionButton backButton;
-    String id, name, location, date, parkingAvailable, length, difficultyLevel, description;
+    String id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,8 @@ public class UpdateActivity extends AppCompatActivity {
         dateInputUpdate = findViewById(R.id.hike_date_text_update);
         parkingAvailableInputUpdate = findViewById(R.id.hike_parking_available_text_update);
         lengthInputUpdate = findViewById(R.id.hike_length_text_update);
+        weatherForecastUpdate = findViewById(R.id.hike_weather_forecast_text_update);
+        estimatedTimeUpdate = findViewById(R.id.hike_time_estimated_text_update);
         difficultyLevelInputUpdate = findViewById(R.id.hike_difficulty_level_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
 
@@ -54,9 +56,12 @@ public class UpdateActivity extends AppCompatActivity {
                 date = dateInputUpdate.getText().toString().trim();
                 parkingAvailable = parkingAvailableInputUpdate.getText().toString().trim();
                 length = lengthInputUpdate.getText().toString().trim();
+                weatherForecast = weatherForecastUpdate.getText().toString().trim();
+                estimatedTime = estimatedTimeUpdate.getText().toString().trim();
                 difficultyLevel = difficultyLevelInputUpdate.getText().toString().trim();
                 description = descriptionInputUpdate.getText().toString().trim();
-                databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, difficultyLevel, description);
+                databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description);
+
                 // Return HomeFragment
                 Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
                 intent.putExtra("fragmentToLoad", "home_fragment");
@@ -88,6 +93,8 @@ public class UpdateActivity extends AppCompatActivity {
             getIntent().hasExtra("date") &&
             getIntent().hasExtra("parkingAvailable") &&
             getIntent().hasExtra("length") &&
+            getIntent().hasExtra("weatherForecast") &&
+            getIntent().hasExtra("estimatedTime") &&
             getIntent().hasExtra("difficultyLevel") &&
             getIntent().hasExtra("description")
         ){
@@ -98,6 +105,8 @@ public class UpdateActivity extends AppCompatActivity {
             date = getIntent().getStringExtra("date");
             parkingAvailable = getIntent().getStringExtra("parkingAvailable");
             length = getIntent().getStringExtra("length");
+            weatherForecast = getIntent().getStringExtra("weatherForecast");
+            estimatedTime = getIntent().getStringExtra("estimatedTime");
             difficultyLevel = getIntent().getStringExtra("difficultyLevel");
             description = getIntent().getStringExtra("description");
 
@@ -107,6 +116,8 @@ public class UpdateActivity extends AppCompatActivity {
             dateInputUpdate.setText(date);
             parkingAvailableInputUpdate.setText(parkingAvailable);
             lengthInputUpdate.setText(length);
+            weatherForecastUpdate.setText(weatherForecast);
+            estimatedTimeUpdate.setText(estimatedTime);
             difficultyLevelInputUpdate.setText(difficultyLevel);
             descriptionInputUpdate.setText(description);
         }
@@ -129,7 +140,6 @@ public class UpdateActivity extends AppCompatActivity {
                 intent.putExtra("fragmentToLoad", "home_fragment");
                 startActivity(intent);
                 finish(); // end UpdateActivity
-                finish();
             }
         });
 

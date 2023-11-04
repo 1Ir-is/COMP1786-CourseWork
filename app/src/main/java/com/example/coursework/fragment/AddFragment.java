@@ -92,6 +92,8 @@ public class AddFragment extends Fragment {
         TextView parkingAvailableHikeLabel = view.findViewById(R.id.parkingAvailableHike);
         TextView lengthHikeLabel = view.findViewById(R.id.lengthHike);
         TextView difficultyLevelHikeLabel = view.findViewById(R.id.levelHike);
+        TextView weatherForecastLabel = view.findViewById(R.id.weatherHike);
+        TextView estimatedTimeLabel = view.findViewById(R.id.estimatedTimeHike);
 
         // Create a red asterisk (*)
         String redAsterisk = " *";
@@ -103,6 +105,8 @@ public class AddFragment extends Fragment {
         SpannableString parkingAvailableHikeSpan = new SpannableString(parkingAvailableHikeLabel.getText() + redAsterisk);
         SpannableString lengthHikeSpan = new SpannableString(lengthHikeLabel.getText() + redAsterisk);
         SpannableString difficultyLevelHikeSpan = new SpannableString(difficultyLevelHikeLabel.getText() + redAsterisk);
+        SpannableString weatherForecastSpan = new SpannableString(weatherForecastLabel.getText() + redAsterisk);
+        SpannableString estimatedTimeSpan = new SpannableString(estimatedTimeLabel.getText() + redAsterisk);
 
         // Set the text color of the asterisk to red
         int redColor = Color.RED;
@@ -112,6 +116,8 @@ public class AddFragment extends Fragment {
         parkingAvailableHikeSpan.setSpan(new ForegroundColorSpan(redColor), parkingAvailableHikeSpan.length() - 1, parkingAvailableHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         lengthHikeSpan.setSpan(new ForegroundColorSpan(redColor), lengthHikeSpan.length() - 1, lengthHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         difficultyLevelHikeSpan.setSpan(new ForegroundColorSpan(redColor), difficultyLevelHikeSpan.length() - 1, difficultyLevelHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        weatherForecastSpan.setSpan(new ForegroundColorSpan(redColor), weatherForecastSpan.length() - 1, weatherForecastSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        estimatedTimeSpan.setSpan(new ForegroundColorSpan(redColor), estimatedTimeSpan.length() - 1, estimatedTimeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // Set the SpannableStrings as the text for the TextViews
         nameHikeLabel.setText(nameHikeSpan);
@@ -120,6 +126,8 @@ public class AddFragment extends Fragment {
         parkingAvailableHikeLabel.setText(parkingAvailableHikeSpan);
         lengthHikeLabel.setText(lengthHikeSpan);
         difficultyLevelHikeLabel.setText(difficultyLevelHikeSpan);
+        weatherForecastLabel.setText(weatherForecastSpan);
+        estimatedTimeLabel.setText(estimatedTimeSpan);
 
         // Find the EditText by their IDs
         final EditText hikeNameEditText = view.findViewById(R.id.hike_name_text);
@@ -128,16 +136,40 @@ public class AddFragment extends Fragment {
         final RadioGroup radioGroupParking = view.findViewById(R.id.radioGroupParking);
         final EditText hikeLengthEditText = view.findViewById(R.id.hike_length_text);
         final Spinner spinnerDifficulty = view.findViewById(R.id.spinnerDifficulty);
+        final Spinner spinnerWeatherForecast = view.findViewById(R.id.hike_weather_spinner);
+        final EditText estimatedTime = view.findViewById(R.id.hike_estimated_time_text);
         final EditText hikeDescriptionEditText = view.findViewById(R.id.hike_description_text);
 
         // Set up the Difficulty Level Spinner
         List<String> difficultyLevels = new ArrayList<>();
+
+        // Create a List of difficulty level
         difficultyLevels.add("Easy");
         difficultyLevels.add("Moderate");
         difficultyLevels.add("Difficult");
+
+        // Create a adapter to connect to the Spinner
         ArrayAdapter<String> difficultyAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, difficultyLevels);
         difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set the adapter to the spinner
         spinnerDifficulty.setAdapter(difficultyAdapter);
+
+        // Set up the Weather Spinner
+        List<String> weatherForecast = new ArrayList<>();
+
+        // Create a List of weather
+        weatherForecast.add("Sunny");
+        weatherForecast.add("Cloudy");
+        weatherForecast.add("Rainy");
+        weatherForecast.add("Snowy");
+
+        // Create a adapter to connect to the Spinner
+        ArrayAdapter<String> weatherAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, weatherForecast);
+        weatherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set the adapter to the spinner
+        spinnerWeatherForecast.setAdapter(weatherAdapter);
 
         Button addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +193,11 @@ public class AddFragment extends Fragment {
                 }
 
                 String hikeLength = hikeLengthEditText.getText().toString();
+
+                // Get the selected weather forecast from the Spinner
+                String hikeWeatherForecast = spinnerWeatherForecast.getSelectedItem().toString();
+
+                String hikeTimeEstimated = estimatedTime.getText().toString();
 
                 // Get the selected difficulty level from the Spinner
                 String hikeDifficulty = spinnerDifficulty.getSelectedItem().toString();
@@ -188,11 +225,7 @@ public class AddFragment extends Fragment {
                         }
                         else if (!isNameOfHikeValid) {
                             showValidationError("Invalid name. Please enter again!");
-                        }
-                        else if (hikeDescription.isEmpty()) {
-                            showValidationError("Please fill in all fields!");
-                        }
-                        else {
+                        } else {
                             // Create an intent to start the ConfirmationActivity
                             Intent intent = new Intent(getActivity(), ConfirmationActivity.class);
 
@@ -202,6 +235,8 @@ public class AddFragment extends Fragment {
                             intent.putExtra("HikeDate", hikeDate);
                             intent.putExtra("HikeParking", finalHikeParking);
                             intent.putExtra("HikeLength", hikeLength);
+                            intent.putExtra("HikeWeatherForecast", hikeWeatherForecast);
+                            intent.putExtra("HikeTimeEstimated", hikeTimeEstimated);
                             intent.putExtra("HikeDifficulty", hikeDifficulty);
                             intent.putExtra("HikeDescription", hikeDescription);
 

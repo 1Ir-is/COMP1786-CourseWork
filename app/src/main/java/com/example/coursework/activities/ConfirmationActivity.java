@@ -25,6 +25,8 @@ public class ConfirmationActivity extends AppCompatActivity {
         String hikeDate = intent.getStringExtra("HikeDate");
         String hikeParking = intent.getStringExtra("HikeParking");
         String hikeLength = intent.getStringExtra("HikeLength");
+        String hikeWeatherForecast = intent.getStringExtra("HikeWeatherForecast");
+        String hikeTimeEstimated = intent.getStringExtra("HikeTimeEstimated");
         String hikeDifficulty = intent.getStringExtra("HikeDifficulty");
         String hikeDescription = intent.getStringExtra("HikeDescription");
 
@@ -36,6 +38,8 @@ public class ConfirmationActivity extends AppCompatActivity {
                 "\nDate of Hike: " + hikeDate +
                 "\nParking Available: " + hikeParking +
                 "\nLength of Hike: " + hikeLength +
+                "\nWeather Forecast: " + hikeWeatherForecast +
+                "\nTime Estimated: " + hikeTimeEstimated +
                 "\nDifficulty Level: " + hikeDifficulty +
                 "\nDescription: " + hikeDescription);
 
@@ -50,6 +54,8 @@ public class ConfirmationActivity extends AppCompatActivity {
                         hikeDate,
                         hikeParking,
                         hikeLength,
+                        hikeWeatherForecast,
+                        hikeTimeEstimated,
                         hikeDifficulty,
                         hikeDescription
                 );
@@ -58,9 +64,6 @@ public class ConfirmationActivity extends AppCompatActivity {
                 Intent intent = new Intent(ConfirmationActivity.this, MainActivity.class);
                 intent.putExtra("fragmentToLoad", "home_fragment");
                 startActivity(intent);
-                finish(); // end UpdateActivity
-
-                // Handle OK button click
                 finish(); // Close the ConfirmationActivity
             }
         });

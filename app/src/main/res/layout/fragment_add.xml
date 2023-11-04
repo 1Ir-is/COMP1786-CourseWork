@@ -135,41 +135,44 @@
                 android:textSize="20sp" />
         </TableRow>
 
-        <TextView
-            android:id="@+id/parkingAvailableHike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:text="Parking Available"
-            app:layout_constraintHorizontal_bias="0.498" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupParking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hike_date_text">
-
-            <RadioButton
-                android:id="@+id/radioButtonYes"
+        <TableRow
+            android:layout_marginBottom="20sp">
+            <TextView
+                android:id="@+id/parkingAvailableHike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="Yes" />
+                android:layout_gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:text="Parking Available"
+                app:layout_constraintHorizontal_bias="0.498" />
 
-            <RadioButton
-                android:id="@+id/radioButtonNo"
+            <RadioGroup
+                android:id="@+id/radioGroupParking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No" />
-        </RadioGroup>
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hike_date_text">
+
+                <RadioButton
+                    android:id="@+id/radioButtonYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="Yes" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No" />
+            </RadioGroup>
+        </TableRow>
 
         <TableRow
             android:layout_marginBottom="20sp">
@@ -207,6 +210,62 @@
                 app:layout_constraintTop_toBottomOf="@+id/lengthHike"
                 tools:ignore="RtlSymmetry" />
         </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="20sp">
+
+            <TextView
+                android:id="@+id/weatherHike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:text="Weather Forecast"
+                app:layout_constraintHorizontal_bias="0.498" />
+
+            <Spinner
+                android:id="@+id/hike_weather_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:spinnerMode="dropdown"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="20sp">
+
+            <TextView
+                android:id="@+id/estimatedTimeHike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:text="Estimated Time"
+                app:layout_constraintHorizontal_bias="0.498" />
+
+            <EditText
+                android:id="@+id/hike_estimated_time_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingStart="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/text_color"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text=""
+                android:textSize="20sp" />
+        </TableRow>
+
 
         <TableRow
             android:layout_marginBottom="20sp">
@@ -256,7 +315,7 @@
         <EditText
             android:id="@+id/hike_description_text"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/input_background"
             android:gravity="top"
@@ -275,7 +334,7 @@
             android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:text="Add"
             android:textSize="20sp"
             android:background="@color/teal_200"

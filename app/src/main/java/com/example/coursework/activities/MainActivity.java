@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             String fragmentToLoad = intent.getStringExtra("fragmentToLoad");
             if (fragmentToLoad != null) {
                 if (fragmentToLoad.equals("home_fragment")) {
-                    // Hiển thị HomeFragment
+                    // Display HomeFragment
                     replaceFragment(new HomeFragment());
                 }
             }

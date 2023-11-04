@@ -22,7 +22,7 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
 
     private final Context context;
     Activity activity;
-    private final ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_difficulty_level, hike_description;
+    private final ArrayList hike_id, hike_name, hike_location, hike_date, hike_parking_available, hike_length, hike_weather_forecast, hike_time_estimated, hike_difficulty_level, hike_description;
     public HikerAdapter(
             Activity activity,
             Context context,
@@ -32,6 +32,8 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
             ArrayList hike_date,
             ArrayList hike_parking_available,
             ArrayList hike_length,
+            ArrayList hike_weather_forecast,
+            ArrayList hike_time_estimated,
             ArrayList hike_difficulty_level,
             ArrayList hike_description
     ){
@@ -43,6 +45,8 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
         this.hike_date = hike_date;
         this.hike_parking_available = hike_parking_available;
         this.hike_length = hike_length;
+        this.hike_weather_forecast = hike_weather_forecast;
+        this.hike_time_estimated = hike_time_estimated;
         this.hike_difficulty_level = hike_difficulty_level;
         this.hike_description = hike_description;
 
@@ -72,6 +76,8 @@ public class HikerAdapter extends RecyclerView.Adapter<HikerAdapter.MyViewHolder
                 intent.putExtra("date", String.valueOf(hike_date.get(position)));
                 intent.putExtra("parkingAvailable", String.valueOf(hike_parking_available.get(position)));
                 intent.putExtra("length", String.valueOf(hike_length.get(position)));
+                intent.putExtra("weatherForecast", String.valueOf(hike_weather_forecast.get(position)));
+                intent.putExtra("estimatedTime", String.valueOf(hike_time_estimated.get(position)));
                 intent.putExtra("difficultyLevel", String.valueOf(hike_difficulty_level.get(position)));
                 intent.putExtra("description", String.valueOf(hike_description.get(position)));
                 activity.startActivityForResult(intent, 1);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
-    private static final String DATABASE_NAME = "HikerApp.db";
+    private static final String DATABASE_NAME = "MyHikerApp.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "my_hiker";
@@ -24,6 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "hike_date";
     private static final String COLUMN_PARKING_AVAILABLE = "hike_parking_available";
     private static final String COLUMN_LENGTH = "hike_length";
+    private static final String COLUMN_WEATHER_FORECAST = "hike_weather_forecast";
+    private static final String COLUMN_TIME_ESTIMATED = "hike_time_estimated";
     private static final String COLUMN_DIFFICULTY_LEVEL = "hike_difficulty_level";
     private static final String COLUMN_DESCRIPTION = "hike_description";
 
@@ -41,6 +43,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_PARKING_AVAILABLE + " TEXT, " +
                 COLUMN_LENGTH + " TEXT, " +
+                COLUMN_WEATHER_FORECAST + " TEXT, " +
+                COLUMN_TIME_ESTIMATED + " TEXT, " +
                 COLUMN_DIFFICULTY_LEVEL + " TEXT, " +
                 COLUMN_DESCRIPTION + " TEXT);";
         sqLiteDatabase.execSQL(query);
@@ -58,6 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String date,
         String parkingAvailable,
         String length,
+        String weatherForecast,
+        String estimatedTime,
         String difficultyLevel,
         String description
     ){
@@ -69,6 +75,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DATE, date);
         contentValues.put(COLUMN_PARKING_AVAILABLE, parkingAvailable);
         contentValues.put(COLUMN_LENGTH, length);
+        contentValues.put(COLUMN_WEATHER_FORECAST, weatherForecast);
+        contentValues.put(COLUMN_TIME_ESTIMATED, estimatedTime);
         contentValues.put(COLUMN_DIFFICULTY_LEVEL, difficultyLevel);
         contentValues.put(COLUMN_DESCRIPTION, description);
         long result = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
@@ -99,6 +107,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String date,
         String parkingAvailable,
         String length,
+        String weatherForecast,
+        String estimatedTime,
         String difficultyLevel,
         String description
     ){
@@ -109,6 +119,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DATE, date);
         contentValues.put(COLUMN_PARKING_AVAILABLE, parkingAvailable);
         contentValues.put(COLUMN_LENGTH, length);
+        contentValues.put(COLUMN_WEATHER_FORECAST, weatherForecast);
+        contentValues.put(COLUMN_TIME_ESTIMATED, estimatedTime);
         contentValues.put(COLUMN_DIFFICULTY_LEVEL, difficultyLevel);
         contentValues.put(COLUMN_DESCRIPTION, description);
         
@@ -141,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String[] columns = {
                 COLUMN_ID, COLUMN_NAME, COLUMN_LOCATION, COLUMN_DATE, COLUMN_PARKING_AVAILABLE,
-                COLUMN_LENGTH, COLUMN_DIFFICULTY_LEVEL, COLUMN_DESCRIPTION
+                COLUMN_LENGTH, COLUMN_WEATHER_FORECAST, COLUMN_TIME_ESTIMATED, COLUMN_DIFFICULTY_LEVEL, COLUMN_DESCRIPTION
         };
         String selection = COLUMN_NAME + " LIKE ?";
         String[] selectionArgs = new String[]{"%" + query + "%"};
