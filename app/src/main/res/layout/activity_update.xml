@@ -46,7 +46,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/nameHike"
+                android:id="@+id/nameHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -76,7 +76,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/nameLocation"
+                android:id="@+id/nameLocationUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -109,7 +109,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/dateHike"
+                android:id="@+id/dateHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -138,7 +138,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/parkingAvailableHike"
+                android:id="@+id/parkingAvailableHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -173,7 +173,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/lengthHike"
+                android:id="@+id/lengthHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -210,7 +210,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/weatherForecastHike"
+                android:id="@+id/weatherForecastHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -235,7 +235,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/estimatedTimeHike"
+                android:id="@+id/estimatedTimeHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -261,7 +261,7 @@
         <TableRow
             android:layout_marginBottom="20sp">
             <TextView
-                android:id="@+id/levelHike"
+                android:id="@+id/levelHikeUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"

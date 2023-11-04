@@ -8,7 +8,11 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -42,17 +47,65 @@ public class UpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        // Find the TextView by their IDs
+        TextView nameHikeLabel = findViewById(R.id.nameHikeUpdate);
+        TextView locationHikeLabel = findViewById(R.id.nameLocationUpdate);
+        TextView dateHikeLabel = findViewById(R.id.dateHikeUpdate);
+        TextView parkingAvailableHikeLabel = findViewById(R.id.parkingAvailableHikeUpdate);
+        TextView lengthHikeLabel = findViewById(R.id.lengthHikeUpdate);
+        TextView difficultyLevelHikeLabel = findViewById(R.id.levelHikeUpdate);
+        TextView weatherForecastLabel = findViewById(R.id.weatherForecastHikeUpdate);
+        TextView estimatedTimeLabel = findViewById(R.id.estimatedTimeHikeUpdate);
+
+        // Create a red asterisk (*)
+        String redAsterisk = " *";
+
+        // Create a SpannableString with the label text and the red asterisk
+        SpannableString nameHikeSpan = new SpannableString(nameHikeLabel.getText() + redAsterisk);
+        SpannableString locationHikeSpan = new SpannableString(locationHikeLabel.getText() + redAsterisk);
+        SpannableString dateHikeSpan = new SpannableString(dateHikeLabel.getText() + redAsterisk);
+        SpannableString parkingAvailableHikeSpan = new SpannableString(parkingAvailableHikeLabel.getText() + redAsterisk);
+        SpannableString lengthHikeSpan = new SpannableString(lengthHikeLabel.getText() + redAsterisk);
+        SpannableString difficultyLevelHikeSpan = new SpannableString(difficultyLevelHikeLabel.getText() + redAsterisk);
+        SpannableString weatherForecastSpan = new SpannableString(weatherForecastLabel.getText() + redAsterisk);
+        SpannableString estimatedTimeSpan = new SpannableString(estimatedTimeLabel.getText() + redAsterisk);
+
+        // Set the text color of the asterisk to red
+        int redColor = Color.RED;
+        nameHikeSpan.setSpan(new ForegroundColorSpan(redColor), nameHikeSpan.length() - 1, nameHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        locationHikeSpan.setSpan(new ForegroundColorSpan(redColor), locationHikeSpan.length() - 1, locationHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        dateHikeSpan.setSpan(new ForegroundColorSpan(redColor), dateHikeSpan.length() - 1, dateHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        parkingAvailableHikeSpan.setSpan(new ForegroundColorSpan(redColor), parkingAvailableHikeSpan.length() - 1, parkingAvailableHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        lengthHikeSpan.setSpan(new ForegroundColorSpan(redColor), lengthHikeSpan.length() - 1, lengthHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        difficultyLevelHikeSpan.setSpan(new ForegroundColorSpan(redColor), difficultyLevelHikeSpan.length() - 1, difficultyLevelHikeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        weatherForecastSpan.setSpan(new ForegroundColorSpan(redColor), weatherForecastSpan.length() - 1, weatherForecastSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        estimatedTimeSpan.setSpan(new ForegroundColorSpan(redColor), estimatedTimeSpan.length() - 1, estimatedTimeSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Set the SpannableStrings as the text for the TextViews
+        nameHikeLabel.setText(nameHikeSpan);
+        locationHikeLabel.setText(locationHikeSpan);
+        dateHikeLabel.setText(dateHikeSpan);
+        parkingAvailableHikeLabel.setText(parkingAvailableHikeSpan);
+        lengthHikeLabel.setText(lengthHikeSpan);
+        difficultyLevelHikeLabel.setText(difficultyLevelHikeSpan);
+        weatherForecastLabel.setText(weatherForecastSpan);
+        estimatedTimeLabel.setText(estimatedTimeSpan);
+
+        // Get the id for EditText
         nameInputUpdate = findViewById(R.id.hike_name_text_update);
         locationInputUpdate = findViewById(R.id.hike_location_text_update);
         dateInputUpdate = findViewById(R.id.hike_date_text_update);
         lengthInputUpdate = findViewById(R.id.hike_length_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
 
+        // Get the id for time button
         estimatedTimeUpdate = findViewById(R.id.hike_estimated_time_update_button);
 
+        // Get the id for spinner
         hikeWeatherForecastSpinner = findViewById(R.id.hike_weather_forecast_spinner);
         hikeDifficultyLevelSpinner = findViewById(R.id.hike_difficulty_level_spinner);
 
+        // Get the id for radio button and group
         parkingRadioGroup = findViewById(R.id.parking_available_radio_group);
         radioButtonYes = findViewById(R.id.radio_yes);
         radioButtonNo = findViewById(R.id.radio_no);
@@ -62,7 +115,7 @@ public class UpdateActivity extends AppCompatActivity {
         backButton = findViewById(R.id.return_button);
 
         // First we call this
-        getData();
+        getHikerInformation();
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +183,7 @@ public class UpdateActivity extends AppCompatActivity {
         });
     }
 
-    public void getData(){
+    public void getHikerInformation(){
         if (
             getIntent().hasExtra("id") &&
             getIntent().hasExtra("name") &&
@@ -150,7 +203,6 @@ public class UpdateActivity extends AppCompatActivity {
             date = getIntent().getStringExtra("date");
             parkingAvailable = getIntent().getStringExtra("parkingAvailable");
             length = getIntent().getStringExtra("length");
-            weatherForecast = getIntent().getStringExtra("weatherForecast");
             String weatherForecast = getIntent().getStringExtra("weatherForecast");
             estimatedTime = getIntent().getStringExtra("estimatedTime");
             String difficultyLevel = getIntent().getStringExtra("difficultyLevel");
