@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.coursework.database.DatabaseHelper;
@@ -20,7 +22,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, parkingAvailableInputUpdate, lengthInputUpdate, weatherForecastUpdate, estimatedTimeUpdate ,difficultyLevelInputUpdate, descriptionInputUpdate;
+    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, lengthInputUpdate, estimatedTimeUpdate, descriptionInputUpdate;
+    RadioGroup parkingRadioGroup;
+    RadioButton radioButtonYes, radioButtonNo;
     Button updateButton, deleteButton;
     FloatingActionButton backButton;
     String id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description;
@@ -33,12 +37,12 @@ public class UpdateActivity extends AppCompatActivity {
         nameInputUpdate = findViewById(R.id.hike_name_text_update);
         locationInputUpdate = findViewById(R.id.hike_location_text_update);
         dateInputUpdate = findViewById(R.id.hike_date_text_update);
-        parkingAvailableInputUpdate = findViewById(R.id.hike_parking_available_text_update);
         lengthInputUpdate = findViewById(R.id.hike_length_text_update);
-        weatherForecastUpdate = findViewById(R.id.hike_weather_forecast_text_update);
         estimatedTimeUpdate = findViewById(R.id.hike_time_estimated_text_update);
-        difficultyLevelInputUpdate = findViewById(R.id.hike_difficulty_level_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
+        parkingRadioGroup = findViewById(R.id.parking_available_radio_group);
+        radioButtonYes = findViewById(R.id.radio_yes);
+        radioButtonNo = findViewById(R.id.radio_no);
 
         deleteButton = findViewById(R.id.deleteButton);
         updateButton = findViewById(R.id.updateButton);
@@ -54,12 +58,14 @@ public class UpdateActivity extends AppCompatActivity {
                 name = nameInputUpdate.getText().toString().trim();
                 location = locationInputUpdate.getText().toString().trim();
                 date = dateInputUpdate.getText().toString().trim();
-                parkingAvailable = parkingAvailableInputUpdate.getText().toString().trim();
                 length = lengthInputUpdate.getText().toString().trim();
-                weatherForecast = weatherForecastUpdate.getText().toString().trim();
                 estimatedTime = estimatedTimeUpdate.getText().toString().trim();
-                difficultyLevel = difficultyLevelInputUpdate.getText().toString().trim();
                 description = descriptionInputUpdate.getText().toString().trim();
+
+                int selectedId = parkingRadioGroup.getCheckedRadioButtonId();
+                RadioButton selectedRadioButton = findViewById(selectedId);
+                parkingAvailable = selectedRadioButton.getText().toString();
+
                 databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description);
 
                 // Return HomeFragment
@@ -114,14 +120,17 @@ public class UpdateActivity extends AppCompatActivity {
             nameInputUpdate.setText(name);
             locationInputUpdate.setText(location);
             dateInputUpdate.setText(date);
-            parkingAvailableInputUpdate.setText(parkingAvailable);
             lengthInputUpdate.setText(length);
-            weatherForecastUpdate.setText(weatherForecast);
             estimatedTimeUpdate.setText(estimatedTime);
-            difficultyLevelInputUpdate.setText(difficultyLevel);
             descriptionInputUpdate.setText(description);
-        }
-        else{
+
+            // Setting radio button for parking availability
+            if (parkingAvailable.equals("Yes")) {
+                radioButtonYes.setChecked(true);
+            } else if (parkingAvailable.equals("No")) {
+                radioButtonNo.setChecked(true);
+            }
+        } else {
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }
     }
