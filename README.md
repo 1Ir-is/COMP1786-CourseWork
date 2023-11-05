@@ -7,7 +7,7 @@ M-Hike is a mobile application designed for hikers to plan, document details of 
 ### Features
 - **Add Hike Details**: Users can input and store information about their hikes, including the hike's name, location, date, parking availability, length, difficulty level, and description (if any).
 - **Store, View, and Delete Hike Details or Reset the Database**: All user-provided details are initially stored on the device in an SQLite database.
-- **Search**: Users can search for hikes based on name, location, length, and/or date.
+- **Search**: Users can search for hikes based on name of hike.
 
 ### Usage Guide
 1. **Add Hike Details**: Input specific hike details by providing the hike's name, location, date, and other relevant information.
