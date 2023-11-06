@@ -5,7 +5,7 @@ M-Hike is a mobile application designed for hikers to plan, document details of 
 ## Application Description
 
 ### Features
-- **Add Hike Details**: Users can input and store information about their hikes, including the hike's name, location, date, parking availability, length, difficulty level, and description (if any).
+- **Add Hike Details**: Users can input and store information about their hikes, including the hike's name, location, date, parking availability, length, weather, time start, difficulty level, and description (if any).
 - **Store, View, and Delete Hike Details or Reset the Database**: All user-provided details are initially stored on the device in an SQLite database.
 - **Search**: Users can search for hikes based on name of hike.
 
@@ -32,9 +32,8 @@ Feel free to contribute by:
 - Suggesting enhancements
 - Opening pull requests
 
-## Credits
-The app is developed by 1Ir-is (Huynh Minh Huy) - TCD0702 - 001353732.
-
 ### React Native Version
 For those interested in a React Native version of M-Hike, visit [COMP1786-CourseWork-ReWork](https://github.com/1Ir-is/COMP1786-CourseWork-ReWork) repository to explore this alternative implementation. In React Native version, it does not have search function yet.
 
+## Credits
+The app is developed by 1Ir-is (Huynh Minh Huy) - TCD0702 - 001353732.
