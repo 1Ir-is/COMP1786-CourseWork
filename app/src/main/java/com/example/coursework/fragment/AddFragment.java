@@ -1,5 +1,6 @@
 package com.example.coursework.fragment;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -137,7 +139,7 @@ public class AddFragment extends Fragment {
         // Find the EditText by their IDs
         final EditText hikeNameEditText = view.findViewById(R.id.hike_name_text);
         final EditText hikeLocationEditText = view.findViewById(R.id.hike_location_text);
-        final EditText hikeDateEditText = view.findViewById(R.id.hike_date_text);
+        final Button dateButton = view.findViewById(R.id.hike_date_button);
         final RadioGroup radioGroupParking = view.findViewById(R.id.radioGroupParking);
         final EditText hikeLengthEditText = view.findViewById(R.id.hike_length_text);
         final Spinner spinnerDifficulty = view.findViewById(R.id.spinnerDifficulty);
@@ -176,6 +178,27 @@ public class AddFragment extends Fragment {
         // Set the adapter to the spinner
         spinnerWeatherForecast.setAdapter(weatherAdapter);
 
+        // Set up date button
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        dateButton.setText(selectedDate);
+                    }
+                }, year, month, day);
+
+                datePickerDialog.show();
+            }
+        });
+
         // Set up time button
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +226,7 @@ public class AddFragment extends Fragment {
                 // Get data entered by the user
                 String hikeName = hikeNameEditText.getText().toString();
                 String hikeLocation = hikeLocationEditText.getText().toString();
-                String hikeDate = hikeDateEditText.getText().toString();
+                String hikeDescription = hikeDescriptionEditText.getText().toString();
 
                 // Get the selected parking option
                 String hikeParking = "";
@@ -222,12 +245,12 @@ public class AddFragment extends Fragment {
                 // Get the selected weather forecast from the Spinner
                 String hikeWeatherForecast = spinnerWeatherForecast.getSelectedItem().toString();
 
+                // Get the date and time
+                String hikeDate = dateButton.getText().toString();
                 String hikeTimeEstimated = timeButton.getText().toString();
 
                 // Get the selected difficulty level from the Spinner
                 String hikeDifficulty = spinnerDifficulty.getSelectedItem().toString();
-
-                String hikeDescription = hikeDescriptionEditText.getText().toString();
 
                 // Create an AlertDialog to confirm data entry
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -240,13 +263,9 @@ public class AddFragment extends Fragment {
 
                         // Validation checks
                         boolean isNameOfHikeValid = isNameOfHikeValid(hikeName);
-                        boolean isDateOfHikeValid = isDateOfHikeValid(hikeDate);
 
                         if (hikeName.isEmpty() || hikeLocation.isEmpty() || hikeDate.isEmpty() || hikeLength.isEmpty() || hikeDifficulty.isEmpty()){
                             showValidationError("All fields marked with * are required!");
-                        }
-                        else if (!isDateOfHikeValid) {
-                            showValidationError("Invalid date format. Please input again, use dd/mm/yyyy format!");
                         }
                         else if (!isNameOfHikeValid) {
                             showValidationError("Invalid name. Please enter again!");
@@ -293,42 +312,4 @@ public class AddFragment extends Fragment {
         return name.matches("[a-zA-Z ]+");
     }
 
-    // Validation method for date in "dd/mm/yyyy" format
-    private boolean isDateOfHikeValid(String date){
-        // Define a regular expression pattern for a valid date in "dd/mm/yyyy" format
-        String regex = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\\d\\d$";
-
-        // Check if the input matches the pattern
-        if (date.matches(regex)){
-            // Split the date into day, month and year
-            String[] dateParts = date.split("/");
-            int day = Integer.parseInt(dateParts[0]);
-            int month = Integer.parseInt(dateParts[1]);
-            int year = Integer.parseInt(dateParts[2]);
-
-            // Check if the year is a leap year (for February validation)
-            boolean isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-
-            // Validate day, month, and year
-            if (month >= 1 && month <= 12) {
-                if (month == 2) {
-                    if (isLeapYear && (day >= 1 && day <= 29)) {
-                        // Valid leap year date
-                        return true;
-                    } else {
-                        // Valid non-leap year date
-                        return !isLeapYear && (day >= 1 && day <= 28);
-                    }
-                } else if ((month == 4 || month == 6 || month == 9 || month == 11) && (day >= 1 && day <= 30)) {
-                    // Valid 30-day month date
-                    return true;
-                } else {
-                    // Valid 31-day month date
-                    return (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && (day >= 1 && day <= 31);
-                }
-            }
-        }
-        // Invalid date of hike
-        return false;
-    }
 }

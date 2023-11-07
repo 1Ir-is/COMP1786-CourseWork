@@ -120,18 +120,11 @@
                 android:text="Date of the hike"
                 app:layout_constraintHorizontal_bias="0.498" />
 
-            <EditText
-                android:id="@+id/hike_date_text_update"
+            <Button
+                android:id="@+id/hike_date_update_button"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingStart="15dp"
-                android:textStyle="italic"
-                android:textColor="@color/text_color"
-                android:background="@drawable/input_background"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text=""
                 android:textSize="20sp" />
         </TableRow>
 

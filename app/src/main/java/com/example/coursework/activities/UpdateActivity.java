@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
@@ -34,11 +36,11 @@ import java.util.Locale;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText nameInputUpdate, locationInputUpdate, dateInputUpdate, lengthInputUpdate, descriptionInputUpdate;
+    EditText nameInputUpdate, locationInputUpdate, lengthInputUpdate, descriptionInputUpdate;
     RadioGroup parkingRadioGroup;
     Spinner hikeWeatherForecastSpinner, hikeDifficultyLevelSpinner;
     RadioButton radioButtonYes, radioButtonNo;
-    Button updateButton, deleteButton, estimatedTimeUpdate;
+    Button updateButton, deleteButton, estimatedTimeUpdate, dateUpdate;
     FloatingActionButton backButton;
     String id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description;
 
@@ -94,12 +96,12 @@ public class UpdateActivity extends AppCompatActivity {
         // Get the id for EditText
         nameInputUpdate = findViewById(R.id.hike_name_text_update);
         locationInputUpdate = findViewById(R.id.hike_location_text_update);
-        dateInputUpdate = findViewById(R.id.hike_date_text_update);
         lengthInputUpdate = findViewById(R.id.hike_length_text_update);
         descriptionInputUpdate = findViewById(R.id.hike_description_text_update);
 
-        // Get the id for time button
+        // Get the id for datetime button
         estimatedTimeUpdate = findViewById(R.id.hike_estimated_time_update_button);
+        dateUpdate = findViewById(R.id.hike_date_update_button);
 
         // Get the id for spinner
         hikeWeatherForecastSpinner = findViewById(R.id.hike_weather_forecast_spinner);
@@ -125,7 +127,7 @@ public class UpdateActivity extends AppCompatActivity {
                 // get the input data
                 name = nameInputUpdate.getText().toString().trim();
                 location = locationInputUpdate.getText().toString().trim();
-                date = dateInputUpdate.getText().toString().trim();
+                date = dateUpdate.getText().toString().trim();
                 length = lengthInputUpdate.getText().toString().trim();
                 estimatedTime = estimatedTimeUpdate.getText().toString().trim();
                 description = descriptionInputUpdate.getText().toString().trim();
@@ -149,6 +151,25 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
 
+        dateUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        dateUpdate.setText(selectedDate);
+                    }
+                }, year, month, day);
+
+                datePickerDialog.show();
+            }
+        });
         estimatedTimeUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -215,7 +236,7 @@ public class UpdateActivity extends AppCompatActivity {
             // Setting intent data
             nameInputUpdate.setText(name);
             locationInputUpdate.setText(location);
-            dateInputUpdate.setText(date);
+            dateUpdate.setText(date);
             lengthInputUpdate.setText(length);
             estimatedTimeUpdate.setText(estimatedTime);
             descriptionInputUpdate.setText(description);
