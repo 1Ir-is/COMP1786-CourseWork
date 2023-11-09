@@ -125,7 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="dd/mm/yyyy"
+                android:hint="dd/mm/yyyy"
                 android:textSize="20sp"
                 android:textAllCaps="false"/>
         </TableRow>
@@ -251,7 +251,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Select Time"
+                android:hint="Select Time"
                 android:textSize="20sp"
                 android:textAllCaps="false"/>
         </TableRow>

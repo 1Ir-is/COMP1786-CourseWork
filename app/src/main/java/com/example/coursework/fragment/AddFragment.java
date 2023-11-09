@@ -243,20 +243,21 @@ public class AddFragment extends Fragment {
                 String hikeLength = hikeLengthEditText.getText().toString();
 
                 // Get the selected weather forecast from the Spinner
-                String hikeWeatherForecast = spinnerWeatherForecast.getSelectedItem().toString();
+                final String[] hikeWeatherForecast = {spinnerWeatherForecast.getSelectedItem().toString()};
 
                 // Get the date and time
                 String hikeDate = dateButton.getText().toString();
                 String hikeTimeEstimated = timeButton.getText().toString();
 
                 // Get the selected difficulty level from the Spinner
-                String hikeDifficulty = spinnerDifficulty.getSelectedItem().toString();
+                final String[] hikeDifficulty = {spinnerDifficulty.getSelectedItem().toString()};
 
                 // Create an AlertDialog to confirm data entry
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                 builder.setTitle("Confirm Information!");
                 builder.setMessage("Are you sure you want to add this information?");
                 String finalHikeParking = hikeParking;
+                String finalHikeParking1 = hikeParking;
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -264,14 +265,25 @@ public class AddFragment extends Fragment {
                         // Validation checks
                         boolean isNameOfHikeValid = isNameOfHikeValid(hikeName);
                         boolean isLocationOfHikeValid = isNameOfHikeValid(hikeLocation);
+                        boolean isLengthOfHikeValid = isLengthOfHikeValid(hikeLength);
+                        boolean isParkingValid = finalHikeParking1.equals("Yes") || finalHikeParking1.equals("No");
 
-                        if (hikeName.isEmpty() || hikeLocation.isEmpty() || hikeDate.isEmpty() || hikeLength.isEmpty() || hikeDifficulty.isEmpty()){
+                        if (
+                            hikeName.isEmpty() ||
+                            hikeLocation.isEmpty() ||
+                            hikeDate.isEmpty() ||
+                            hikeLength.isEmpty() ||
+                            hikeTimeEstimated.isEmpty() ||
+                            !isParkingValid
+                        ){
                             showValidationError("All fields marked with * are required!");
                         }
                         else if (!isNameOfHikeValid) {
                             showValidationError("Invalid name. Please enter again!");
                         } else if (!isLocationOfHikeValid) {
                             showValidationError("Invalid location. Please enter again!");
+                        } else if (!isLengthOfHikeValid) {
+                            showValidationError("Invalid length. Please enter again!");
                         } else {
                             // Create an intent to start the ConfirmationActivity
                             Intent intent = new Intent(getActivity(), ConfirmationActivity.class);
@@ -282,9 +294,9 @@ public class AddFragment extends Fragment {
                             intent.putExtra("HikeDate", hikeDate);
                             intent.putExtra("HikeParking", finalHikeParking);
                             intent.putExtra("HikeLength", hikeLength);
-                            intent.putExtra("HikeWeatherForecast", hikeWeatherForecast);
+                            intent.putExtra("HikeWeatherForecast", hikeWeatherForecast[0]);
                             intent.putExtra("HikeTimeEstimated", hikeTimeEstimated);
-                            intent.putExtra("HikeDifficulty", hikeDifficulty);
+                            intent.putExtra("HikeDifficulty", hikeDifficulty[0]);
                             intent.putExtra("HikeDescription", hikeDescription);
 
                             // Start the ConfirmationActivity
@@ -313,6 +325,16 @@ public class AddFragment extends Fragment {
     // Validation method for name of the hike
     private boolean isNameOfHikeValid(String name){
         return name.matches("[a-zA-Z ]+");
+    }
+
+    // Validation method for location of the hike
+    private boolean isLocationOfHikeValid(String name){
+        return name.matches("[a-zA-Z ]+");
+    }
+
+    // Validation method for location of the hike
+    private boolean isLengthOfHikeValid(String length) {
+        return length.matches("\\d+\\s?(m|km|M|KM)");
     }
 
 }

@@ -141,15 +141,32 @@ public class UpdateActivity extends AppCompatActivity {
                 weatherForecast = hikeWeatherForecastSpinner.getSelectedItem().toString();
                 difficultyLevel = hikeDifficultyLevelSpinner.getSelectedItem().toString();
 
-                databaseHelper.updateHikeInformation(id, name, location, date, parkingAvailable, length, weatherForecast, estimatedTime, difficultyLevel, description);
+                if (validateData()) {
+                    // Update information in the database
+                    databaseHelper = new DatabaseHelper(UpdateActivity.this);
+                    databaseHelper.updateHikeInformation(
+                        id,
+                        name,
+                        location,
+                        date,
+                        parkingAvailable,
+                        length,
+                        weatherForecast,
+                        estimatedTime,
+                        difficultyLevel,
+                        description
+                    );
 
-                // Return HomeFragment
-                Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
-                intent.putExtra("fragmentToLoad", "home_fragment");
-                startActivity(intent);
-                finish(); // end UpdateActivity
+                    // Return to HomeFragment
+                    Intent intent = new Intent(UpdateActivity.this, MainActivity.class);
+                    intent.putExtra("fragmentToLoad", "home_fragment");
+                    startActivity(intent);
+                    finish(); // end UpdateActivity
+                }
             }
         });
+
+
 
         dateUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +219,53 @@ public class UpdateActivity extends AppCompatActivity {
                 returnToHomeFragment();
             }
         });
+    }
+
+    // Helper method to validate data
+    private boolean validateData() {
+        if (name.isEmpty() || location.isEmpty() || date.isEmpty() || length.isEmpty() || estimatedTime.isEmpty()) {
+            // Display toast
+            Toast.makeText(UpdateActivity.this, "Please enter all required (*) fields", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isNameValid(name)) {
+            // Display toast show name is invalid
+            Toast.makeText(UpdateActivity.this, "Invalid name, Please enter again!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isLocationValid(location)) {
+            // Display toast show location is invalid
+            Toast.makeText(UpdateActivity.this, "Invalid location, Please enter again!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!isLengthValid(length)) {
+            // Display toast show length is invalid
+            Toast.makeText(UpdateActivity.this, "Invalid length, Please enter again! (m or km)", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    // Validate name
+    private boolean isNameValid(String name) {
+        // The name must contain only alphabetic characters and spaces
+        return name.matches("[a-zA-Z ]+");
+    }
+
+    // Validate location
+    private boolean isLocationValid(String location) {
+        // Location must contain only alphabetic characters and spaces
+        return location.matches("[a-zA-Z ]+");
+    }
+
+    // Validate length
+    private boolean isLengthValid(String length) {
+        // Length needs to be a number, with unit of measurement (m or km)
+        return length.matches("\\d+\\s?(m|km)");
     }
 
     public void getHikerInformation(){
