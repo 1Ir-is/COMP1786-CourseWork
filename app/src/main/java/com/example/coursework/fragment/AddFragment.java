@@ -263,12 +263,15 @@ public class AddFragment extends Fragment {
 
                         // Validation checks
                         boolean isNameOfHikeValid = isNameOfHikeValid(hikeName);
+                        boolean isLocationOfHikeValid = isNameOfHikeValid(hikeLocation);
 
                         if (hikeName.isEmpty() || hikeLocation.isEmpty() || hikeDate.isEmpty() || hikeLength.isEmpty() || hikeDifficulty.isEmpty()){
                             showValidationError("All fields marked with * are required!");
                         }
                         else if (!isNameOfHikeValid) {
                             showValidationError("Invalid name. Please enter again!");
+                        } else if (!isLocationOfHikeValid) {
+                            showValidationError("Invalid location. Please enter again!");
                         } else {
                             // Create an intent to start the ConfirmationActivity
                             Intent intent = new Intent(getActivity(), ConfirmationActivity.class);
